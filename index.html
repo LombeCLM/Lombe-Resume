@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chileleko Lombe Moonga — Business & Revenue Operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+```
+:root {
+  --navy: #0d1b2a;
+  --navy-mid: #1a2e45;
+  --steel: #2c4a6e;
+  --gold: #b8902a;
+  --gold-light: #d4aa4a;
+  --cream: #f5f0e8;
+  --white: #fdfcfa;
+  --muted: #8a9ab0;
+  --border: rgba(184,144,42,0.2);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 4rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(13,27,42,0.92);
+  backdrop-filter: blur(12px);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.nav-logo span { color: var(--gold); }
+
+.nav-links { display: flex; gap: 2.4rem; list-style: none; }
+
+.nav-links a {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.nav-links a:hover { color: var(--gold-light); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 4rem 5rem;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 50%, rgba(44,74,110,0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 15% 80%, rgba(184,144,42,0.08) 0%, transparent 60%);
+}
+
+.hero-line {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  opacity: 0.3;
+  right: 38%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.8rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--gold-light);
+}
+
+.hero-subtitle {
+  font-size: 0.92rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 1.8rem;
+  margin-top: 0.6rem;
+}
+
+.hero-desc {
+  font-size: 1.02rem;
+  color: rgba(245,240,232,0.78);
+  max-width: 520px;
+  line-height: 1.75;
+  margin-bottom: 2.8rem;
+}
+
+.hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.btn-primary {
+  padding: 0.8rem 2rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+}
+
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.btn-ghost {
+  padding: 0.8rem 2rem;
+  background: transparent;
+  color: var(--cream);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(245,240,232,0.25);
+  transition: border-color 0.25s, color 0.25s;
+}
+
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+
+.hero-stats {
+  position: absolute;
+  right: 4rem;
+  bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 1;
+}
+
+.stat-item { text-align: right; }
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 300;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── SECTIONS COMMON ── */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 6rem 4rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 3.5rem;
+}
+
+.section-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── ABOUT ── */
+.about { background: var(--navy-mid); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.about-text p {
+  color: rgba(245,240,232,0.8);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.about-text p:last-child { margin-bottom: 0; }
+
+.competencies {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.competency-tag {
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--border);
+  font-size: 0.76rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.competency-tag:hover { border-color: var(--gold); color: var(--gold-light); }
+
+/* ── EXPERIENCE ── */
+.experience { background: var(--navy); }
+
+.exp-list { display: flex; flex-direction: column; gap: 0; }
+
+.exp-item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  padding: 2.4rem 0;
+  border-top: 1px solid var(--border);
+  transition: background 0.2s;
+}
+
+.exp-item:last-child { border-bottom: 1px solid var(--border); }
+
+.exp-meta { padding-top: 0.2rem; }
+
+.exp-period {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.exp-company {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.exp-role {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+
+.exp-bullets li {
+  font-size: 0.9rem;
+  color: rgba(245,240,232,0.72);
+  line-height: 1.6;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.exp-bullets li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+/* ── PROJECTS ── */
+.projects { background: var(--navy-mid); }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.project-card {
+  background: var(--navy);
+  padding: 2.2rem;
+  cursor: default;
+  transition: background 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.project-card:hover { background: var(--navy-mid); }
+.project-card:hover::after { width: 100%; }
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.project-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+.project-link svg {
+  width: 11px; height: 11px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  transition: transform 0.2s;
+}
+
+.project-link:hover svg { transform: translate(2px, -2px); }
+
+.project-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+
+.project-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.project-role {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.project-desc {
+  font-size: 0.88rem;
+  color: rgba(245,240,232,0.68);
+  line-height: 1.65;
+}
+
+/* ── CERTIFICATIONS ── */
+.certifications { background: var(--navy); }
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.cert-card {
+  border: 1px solid var(--border);
+  padding: 1.8rem;
+  position: relative;
+  transition: border-color 0.25s;
+}
+
+.cert-card:hover { border-color: var(--gold); }
+
+.cert-icon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.cert-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+
+.cert-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.cert-issuer {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── TOOLS ── */
+.tools { background: var(--navy-mid); }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.tool-group { }
+
+.tool-category {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tool-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tool-list li {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.7);
+}
+
+/* ── CONTACT ── */
+.contact {
+  background: var(--navy);
+  border-top: 1px solid var(--border);
+}
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.contact-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.contact-heading em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.contact-sub {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.contact-items { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contact-item-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  width: 80px;
+}
+
+.contact-item-value {
+  font-size: 0.92rem;
+  color: rgba(245,240,232,0.85);
+}
+
+.contact-item-value a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.contact-item-value a:hover { border-color: var(--gold); color: var(--gold-light); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 2rem 4rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.footer-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.footer-location::before {
+  content: '●';
+  color: var(--gold);
+  font-size: 0.5rem;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow { animation: fadeUp 0.7s ease both; animation-delay: 0.1s; }
+h1 { animation: fadeUp 0.7s ease both; animation-delay: 0.25s; }
+.hero-subtitle { animation: fadeUp 0.7s ease both; animation-delay: 0.35s; }
+.hero-desc { animation: fadeUp 0.7s ease both; animation-delay: 0.45s; }
+.hero-ctas { animation: fadeUp 0.7s ease both; animation-delay: 0.55s; }
+.hero-stats { animation: fadeUp 0.7s ease both; animation-delay: 0.65s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { gap: 1.5rem; }
+  section { padding: 4rem 1.5rem; }
+  .hero { padding: 7rem 1.5rem 4rem; }
+  .hero-stats { display: none; }
+  .hero-line { display: none; }
+  .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .exp-meta { display: flex; gap: 1rem; align-items: baseline; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .competencies { grid-template-columns: 1fr; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <a class="nav-logo" href="#"><span>C</span>hileleko Lombe</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Lusaka, Zambia &nbsp;·&nbsp; Open to Remote</div>
+    <h1>Chileleko<br><em>Lombe</em> Moonga</h1>
+    <p class="hero-subtitle">Business &amp; Revenue Operations · CRM · Process Improvement</p>
+    <p class="hero-desc">
+      Results-driven operations professional with 4+ years of experience across revenue operations, cross-functional project coordination, CRM administration, and QA — delivering scalable systems that drive growth and institutional confidence.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">4+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Institutional Projects</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2×</div>
+      <div class="stat-label">HubSpot Certified</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I am a Business Operations &amp; Revenue Coordinator based in Lusaka, Zambia, currently leading group-level operations at ProWeb Limited. My work sits at the intersection of process design, CRM optimisation, and cross-functional project delivery — making complex systems run cleanly.
+      </p>
+      <p>
+        I hold a BBA (Cum Laude, 3.54 GPA) from University of the People — a WSCUC-accredited institution — and am certified in HubSpot Revenue Operations and HubSpot Sales Hub Software. My project credentials span Zambia's most prominent financial and regulatory institutions, including the Bank of Zambia, the Securities and Exchange Commission, and the Lusaka Securities Exchange.
+      </p>
+      <p>
+        I am passionate about building operational infrastructure that scales, and I bring the same rigour to client-facing coordination as to internal SOP development.
+      </p>
+    </div>
+    <div>
+      <div class="competencies">
+        <div class="competency-tag">Business &amp; Revenue Operations</div>
+        <div class="competency-tag">CRM Administration (HubSpot)</div>
+        <div class="competency-tag">Cross-functional Coordination</div>
+        <div class="competency-tag">Process Improvement &amp; SOPs</div>
+        <div class="competency-tag">KPI Dashboards &amp; Reporting</div>
+        <div class="competency-tag">Workflow Automation Design</div>
+        <div class="competency-tag">QA Testing &amp; UAT</div>
+        <div class="competency-tag">Vendor &amp; Supplier Management</div>
+        <div class="competency-tag">Sales &amp; Marketing Pipeline</div>
+        <div class="competency-tag">Budget Tracking</div>
+        <div class="competency-tag">Stakeholder Communication</div>
+        <div class="competency-tag">Microsoft Office &amp; Google Suite</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+
+<section class="experience" id="experience">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+
+```
+<div class="exp-item">
+  <div class="exp-meta">
+    <div class="exp-period">Jan 2026 – Present</div>
+    <div class="exp-company">ProWeb Limited · Lusaka</div>
+  </div>
+  <div>
+    <div class="exp-role">Business Operations &amp; Revenue Coordinator</div>
+    <ul class="exp-bullets">
+      <li>Oversee group-level operations across all ProWeb business units, ensuring alignment of standards, reporting structures, and process compliance.</li>
+      <li>Lead cross-functional project delivery from planning through execution — coordinating timelines, resources, and stakeholder communication across Sales, Marketing, Product, and Engineering.</li>
+      <li>Produce executive-level monthly and quarterly performance dashboards, delivering actionable insights that inform strategic planning.</li>
+      <li>Supervise revenue operations workflows including CRM pipeline management, deal automation, lead lifecycle tracking, and renewal coordination.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="exp-item">
+  <div class="exp-meta">
+    <div class="exp-period">Sep 2024 – Jan 2026</div>
+    <div class="exp-company">ProWeb Limited · Lusaka</div>
+  </div>
+  <div>
+    <div class="exp-role">Revenue Operations Executive</div>
+    <ul class="exp-bullets">
+      <li>Administered HubSpot CRM workflows including pipeline stages, deal automation, lead scoring, and onboarding sequences across all business units.</li>
+      <li>Built multi-unit dashboards tracking sales performance, marketing attribution, UTM campaign data, and funnel conversion rates.</li>
+      <li>Conducted comprehensive QA testing and UAT for CRM workflows, marketing campaigns, and digital platforms before go-live.</li>
+      <li>Executed market and competitor analysis to support GTM positioning and product launch strategies.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="exp-item">
+  <div class="exp-meta">
+    <div class="exp-period">Feb 2024 – Aug 2024</div>
+    <div class="exp-company">Wibrema Investments LTD · Lusaka</div>
+  </div>
+  <div>
+    <div class="exp-role">Operations Supervisor</div>
+    <ul class="exp-bullets">
+      <li>Managed day-to-day business operations across multiple concurrent workstreams, maintaining 100% adherence to project deadlines.</li>
+      <li>Developed and enforced SOPs that standardised workflows and reduced operational errors across all shifts.</li>
+      <li>Resolved 95% of client and operational inquiries within 24 hours through structured follow-up protocols.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="exp-item">
+  <div class="exp-meta">
+    <div class="exp-period">Mar 2023 – Feb 2024</div>
+    <div class="exp-company">Wibrema Investments LTD · Lusaka</div>
+  </div>
+  <div>
+    <div class="exp-role">Assistant Operations Supervisor</div>
+    <ul class="exp-bullets">
+      <li>Supported daily operations coordination across Sales, Administrative, and Service Delivery teams.</li>
+      <li>Monitored operational and commercial performance metrics, providing actionable insights to management.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="exp-item">
+  <div class="exp-meta">
+    <div class="exp-period">Jan 2022 – Feb 2023</div>
+    <div class="exp-company">AkzoNobel Group (Dulux) · Lusaka</div>
+  </div>
+  <div>
+    <div class="exp-role">Operations Associate</div>
+    <ul class="exp-bullets">
+      <li>Supported retail and manufacturing operations, assisting with workflow planning, task coordination, and operational readiness across shifts.</li>
+      <li>Conducted inventory counts, maintained accurate stock records, and coordinated timely replenishment to prevent shortages.</li>
+    </ul>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+
+<section class="projects" id="projects">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Key Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+```
+<div class="project-card">
+  <div class="project-tag">Government · Finance</div>
+  <div class="project-name">Bank of Zambia — Website Upgrade</div>
+  <div class="project-role">Project Support &amp; QA Coordinator</div>
+  <p class="project-desc">Supported UI/UX redesign and feature enhancements for Zambia's central bank digital platform. Conducted usability testing and collaborated with developers to optimise navigation, accessibility, and content presentation.</p>
+  <a href="https://www.boz.zm" target="_blank" rel="noopener noreferrer" class="project-link">
+    Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
+
+<div class="project-card">
+  <div class="project-tag">Regulatory · Capital Markets</div>
+  <div class="project-name">Securities &amp; Exchange Commission Zambia — Platform Revamp</div>
+  <div class="project-role">Project Coordinator &amp; QA Tester</div>
+  <p class="project-desc">Coordinated platform revamp between engineering and client teams. Conducted QA testing, issue tracking, and compliance-aligned delivery through structured client reporting.</p>
+  <a href="https://www.seczambia.org.zm" target="_blank" rel="noopener noreferrer" class="project-link">
+    Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
+
+<div class="project-card">
+  <div class="project-tag">Capital Markets · Exchange</div>
+  <div class="project-name">Lusaka Securities Exchange (LUSE) — Platform Enhancement</div>
+  <div class="project-role">Project Support &amp; QA Coordinator</div>
+  <p class="project-desc">Assisted integration and QA of new platform features. Conducted scenario-based testing across devices and produced structured progress reports for stakeholders.</p>
+  <a href="https://www.luse.co.zm" target="_blank" rel="noopener noreferrer" class="project-link">
+    Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
+
+<div class="project-card">
+  <div class="project-tag">Mining &amp; Investment</div>
+  <div class="project-name">ZCCM Investments Holdings Plc — Digital Platform</div>
+  <div class="project-role">Project Coordinator &amp; QA Tester</div>
+  <p class="project-desc">Supported coordination and quality assurance for one of Zambia's leading investment and mining holding companies. Acted as liaison between technical and client stakeholders, ensuring accurate requirements capture and timely delivery.</p>
+  <a href="https://www.zccm-ih.com.zm" target="_blank" rel="noopener noreferrer" class="project-link">
+    Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
+
+<div class="project-card">
+  <div class="project-tag">E-Commerce · Web Platform</div>
+  <div class="project-name">Supergold Vending — Website &amp; Operations Platform</div>
+  <div class="project-role">Project Coordinator &amp; QA Tester</div>
+  <p class="project-desc">Coordinated end-to-end delivery of the web platform, managing timelines, documentation, and stakeholder communication. Served as primary liaison translating business requirements into technical briefs.</p>
+  <a href="https://supergoldvending.com" target="_blank" rel="noopener noreferrer" class="project-link">
+    Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
+
+<div class="project-card">
+  <div class="project-tag">Professional Association · Engineering</div>
+  <div class="project-name">Association of Consulting Engineers of Zambia — Platform Support</div>
+  <div class="project-role">Platform Support &amp; Maintenance Coordinator</div>
+  <p class="project-desc">Provide ongoing platform support and updates for ACEZ's digital presence, responding to evolving organisational needs. Coordinate with technical teams to ensure the platform remains current, functional, and aligned with the association's standards.</p>
+  <a href="https://www.acez.co.zm" target="_blank" rel="noopener noreferrer" class="project-link">
+    Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+
+<section class="certifications" id="certifications">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Certifications &amp; Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid">
+
+```
+<div class="cert-card">
+  <div class="cert-icon">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M9 21l3-3 3 3M12 18V15"/></svg>
+  </div>
+  <div class="cert-name">HubSpot Revenue Operations</div>
+  <div class="cert-issuer">HubSpot Academy · Valid May 2025 – Jun 2026</div>
+</div>
+
+<div class="cert-card">
+  <div class="cert-icon">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M9 21l3-3 3 3M12 18V15"/></svg>
+  </div>
+  <div class="cert-name">HubSpot Sales Hub Software</div>
+  <div class="cert-issuer">HubSpot Academy · Valid Apr 2025 – May 2026</div>
+</div>
+
+<div class="cert-card">
+  <div class="cert-icon">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+  </div>
+  <div class="cert-name">Business Intelligence &amp; Data Analysis</div>
+  <div class="cert-issuer">Corporate Finance Institute</div>
+</div>
+
+<div class="cert-card">
+  <div class="cert-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+  </div>
+  <div class="cert-name">BBA — Business Administration (Cum Laude)</div>
+  <div class="cert-issuer">University of the People · WSCUC Accredited · 3.54 GPA · Dean's List All Semesters</div>
+</div>
+
+<div class="cert-card">
+  <div class="cert-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+  </div>
+  <div class="cert-name">Associates BA — Business Management</div>
+  <div class="cert-issuer">University of the People · Marketing, Entrepreneurship, Accounting, Finance &amp; Strategy</div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- TOOLS -->
+
+<section class="tools">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Tools &amp; Technology</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-group">
+      <div class="tool-category">CRM &amp; Automation</div>
+      <ul class="tool-list">
+        <li>HubSpot (Certified)</li>
+        <li>Zoho CRM</li>
+      </ul>
+    </div>
+    <div class="tool-group">
+      <div class="tool-category">Reporting &amp; Analysis</div>
+      <ul class="tool-list">
+        <li>Microsoft Excel</li>
+        <li>Google Sheets</li>
+        <li>Google Data Studio</li>
+        <li>Microsoft Clarity</li>
+      </ul>
+    </div>
+    <div class="tool-group">
+      <div class="tool-category">Project Management</div>
+      <ul class="tool-list">
+        <li>Trello</li>
+        <li>ClickUp</li>
+        <li>Monday.com</li>
+        <li>Linear</li>
+        <li>Moqups</li>
+      </ul>
+    </div>
+    <div class="tool-group">
+      <div class="tool-category">Collaboration</div>
+      <ul class="tool-list">
+        <li>Slack</li>
+        <li>Microsoft Teams</li>
+        <li>Zoom</li>
+        <li>Google Workspace</li>
+        <li>Outlook</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-heading">Let's work<br><em>together.</em></h2>
+      <p class="contact-sub">
+        Open to operations, revenue, and project coordination roles — locally in Zambia and globally via remote. Feel free to reach out for collaborations, opportunities, or just a conversation.
+      </p>
+      <a href="mailto:ChilelekoLM@Outlook.com" class="btn-primary">Send a Message</a>
+    </div>
+    <div class="contact-items">
+      <div class="contact-item">
+        <span class="contact-item-label">Email</span>
+        <span class="contact-item-value"><a href="mailto:ChilelekoLM@Outlook.com">ChilelekoLM@Outlook.com</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Phone</span>
+        <span class="contact-item-value"><a href="tel:+260779595783">+260 779 595 783</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Location</span>
+        <span class="contact-item-value">Lusaka, Zambia</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Availability</span>
+        <span class="contact-item-value">Open to local &amp; remote roles</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Languages</span>
+        <span class="contact-item-value">English · Bemba · Nyanja</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <span class="footer-copy">© 2026 Chileleko Lombe Moonga. All rights reserved.</span>
+  <span class="footer-location">Lusaka, Zambia</span>
+</footer>
+
+</body>
+</html>

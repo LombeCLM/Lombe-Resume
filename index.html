@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b1622">
+  <title>Chileleko Lombe Moonga</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: calc(100vh - 5rem);
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: 5rem 3.5rem 3rem;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 55% at 75% 40%, rgba(23,40,64,0.7) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 10% 70%, rgba(201,168,76,0.06) 0%, transparent 55%);
+    }
+
+    .hero-grid-line {
+      position: absolute; right: 32%; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 0%, var(--border-gold) 30%, var(--border-gold) 70%, transparent 100%);
+      opacity: 0.4;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2rem;
+    }
+
+    .hero-tag::before {
+      content: ''; display: block; width: 24px; height: 1px; background: var(--gold);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      font-weight: 300; line-height: 1.0; letter-spacing: -0.02em;
+      color: var(--white); margin-bottom: 1.2rem;
+    }
+
+    h1 em { font-style: italic; color: var(--gold-light); }
+
+    .hero-role {
+      font-size: 0.88rem; letter-spacing: 0.08em;
+      color: var(--silver-dim); margin-bottom: 1.6rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+
+    .hero-role::before {
+      content: ''; display: block; width: 20px; height: 1px; background: var(--silver-dim);
+    }
+
+    .hero-desc {
+      font-size: 1rem; color: rgba(232,228,220,0.72);
+      max-width: 500px; line-height: 1.8; margin-bottom: 2.8rem;
+    }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* Stats sidebar */
+    .hero-stats {
+      position: absolute; right: 3.5rem; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 2.4rem;
+      z-index: 1;
+    }
+
+    .stat { text-align: right; }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300;
+      color: var(--silver); line-height: 1;
+    }
+
+    .stat-num span { color: var(--gold); font-size: 1.6rem; }
+
+    .stat-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.2rem;
+    }
+
+    /* Hero bottom bar */
+    .hero-bottom {
+      position: relative; z-index: 1;
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-location {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; color: var(--muted);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    .hero-location::before { content: '●'; color: var(--gold); font-size: 0.45rem; }
+
+    .hero-available {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; color: var(--muted);
+    }
+
+    .available-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4caf82;
+      box-shadow: 0 0 6px #4caf82;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Tool strip */
+    .tools-strip {
+      position: relative; z-index: 1;
+      padding: 3rem 3.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .tools-strip-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.4rem;
+    }
+
+    .tools-row {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+    }
+
+    .tool-chip {
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.68rem; letter-spacing: 0.06em;
+      color: var(--silver-dim);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .tool-chip:hover { border-color: var(--silver); color: var(--silver); }
+
+    /* Quick links */
+    .quick-links {
+      position: relative; z-index: 1;
+      padding: 4rem 3.5rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px; background: var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quick-card {
+      background: var(--navy);
+      padding: 2rem;
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      transition: background 0.2s;
+      position: relative; overflow: hidden;
+    }
+
+    .quick-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .quick-card:hover { background: var(--navy-light); }
+    .quick-card:hover::after { width: 100%; }
+
+    .quick-card-num {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem; color: var(--gold); letter-spacing: 0.12em;
+    }
+
+    .quick-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 500; color: var(--white);
+    }
+
+    .quick-card-desc {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+    }
+
+    .quick-card-arrow {
+      margin-top: auto; padding-top: 1rem;
+      font-size: 1.1rem; color: var(--silver-dim);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .quick-card:hover .quick-card-arrow { color: var(--gold); transform: translateX(4px); }
+
+    @media (max-width: 900px) {
+      .hero { padding: 4rem 1.4rem 2.5rem; }
+      .hero-stats { display: none; }
+      .hero-grid-line { display: none; }
+      .tools-strip, .quick-links { padding-left: 1.4rem; padding-right: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html"><span>C</span>hileleko Lombe</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="impact.html">Impact</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-grid-line"></div>
+
+    <div class="hero-content">
+      <div class="hero-tag fade-up delay-1">Lusaka, Zambia &nbsp;·&nbsp; Open to Remote</div>
+      <h1 class="fade-up delay-2">Chileleko<br><em>Lombe</em><br>Moonga</h1>
+      <div class="hero-role fade-up delay-3">Business &amp; Revenue Operations</div>
+      <p class="hero-desc fade-up delay-3">
+        Operations professional with 4+ years building scalable systems, leading cross-functional projects, and delivering institutional-grade digital platforms across Zambia.
+      </p>
+      <div class="hero-ctas fade-up delay-4">
+        <a href="projects.html" class="btn-primary">View Projects</a>
+        <a href="contact.html" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Institutional Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2<span>×</span></div>
+        <div class="stat-label">HubSpot Certified</div>
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <span class="hero-location">Lusaka, Zambia</span>
+      <span class="hero-available">
+        <span class="available-dot"></span>
+        Available for new opportunities
+      </span>
+    </div>
+  </section>
+
+  <div class="tools-strip">
+    <div class="tools-strip-label">Core Tools &amp; Platforms</div>
+    <div class="tools-row">
+      <span class="tool-chip">HubSpot CRM</span>
+      <span class="tool-chip">Google Data Studio</span>
+      <span class="tool-chip">Microsoft Excel</span>
+      <span class="tool-chip">ClickUp</span>
+      <span class="tool-chip">Linear</span>
+      <span class="tool-chip">Monday.com</span>
+      <span class="tool-chip">Trello</span>
+      <span class="tool-chip">Slack</span>
+      <span class="tool-chip">Zoho CRM</span>
+      <span class="tool-chip">Microsoft Clarity</span>
+      <span class="tool-chip">Google Workspace</span>
+      <span class="tool-chip">Moqups</span>
+    </div>
+  </div>
+
+  <div class="quick-links">
+    <a href="about.html" class="quick-card">
+      <span class="quick-card-num">01</span>
+      <span class="quick-card-title">About Me</span>
+      <span class="quick-card-desc">Background, skills, and what drives my work in operations.</span>
+      <span class="quick-card-arrow">→</span>
+    </a>
+    <a href="projects.html" class="quick-card">
+      <span class="quick-card-num">02</span>
+      <span class="quick-card-title">Projects</span>
+      <span class="quick-card-desc">Institutional digital platforms across finance, regulation, and commerce.</span>
+      <span class="quick-card-arrow">→</span>
+    </a>
+    <a href="resume.html" class="quick-card">
+      <span class="quick-card-num">03</span>
+      <span class="quick-card-title">Resume &amp; Certifications</span>
+      <span class="quick-card-desc">Full work history, education, and professional credentials.</span>
+      <span class="quick-card-arrow">→</span>
+    </a>
+    <a href="impact.html" class="quick-card">
+      <span class="quick-card-num">04</span>
+      <span class="quick-card-title">Impact</span>
+      <span class="quick-card-desc">Numbers, outcomes, and tools that define my operational track record.</span>
+      <span class="quick-card-arrow">→</span>
+    </a>
+    <a href="contact.html" class="quick-card">
+      <span class="quick-card-num">05</span>
+      <span class="quick-card-title">Contact</span>
+      <span class="quick-card-desc">Open to local Zambian and global remote opportunities.</span>
+      <span class="quick-card-arrow">→</span>
+    </a>
+  </div>
+
+  <footer>
+    <span class="footer-copy">© 2026 Chileleko Lombe Moonga</span>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

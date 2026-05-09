@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#16181d">
+  <title>Projects — Chileleko Lombe Moonga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Courier+Prime&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#16181d;--bg-mid:#1c1f26;--bg-card:#20232b;--bg-hover:#252931;--gold:#c8a45a;--gold-light:#dfc07e;--silver:#a8b4c0;--silver-dim:#6e7e8e;--cream:#dde2e8;--white:#f0f2f5;--muted:#5a6878;--border:rgba(168,180,192,0.1);--border-gold:rgba(200,164,90,0.2);--green:#4db885}
+    html{scroll-behavior:smooth;color-scheme:dark}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg)!important;color:var(--cream)!important;line-height:1.6;overflow-x:hidden;min-height:100vh;cursor:none}
+    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.5}
+    .cursor-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+    .cursor-ring{width:32px;height:32px;border:1px solid rgba(200,164,90,0.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.15s ease}
+    .cursor-ring.hover{width:56px;height:56px;border-color:var(--gold);background:rgba(200,164,90,0.05)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:rgba(22,24,29,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;letter-spacing:0.04em;color:var(--white);text-decoration:none}
+    .nav-logo em{font-style:italic;color:var(--gold)}
+    .nav-links{display:flex;gap:0;list-style:none}
+    .nav-links a{display:block;padding:0.4rem 0.9rem;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--silver-dim);text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);border-color:var(--gold)}
+
+    .page-hero{min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;padding:9rem 3rem 4rem;position:relative;overflow:hidden}
+    .hero-bg-text{position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(8rem,18vw,18rem);font-weight:300;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(200,164,90,0.06);pointer-events:none;user-select:none;line-height:1}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,180,192,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(168,180,192,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+    .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+    .orb-a{width:450px;height:450px;background:radial-gradient(circle,rgba(200,164,90,0.07) 0%,transparent 70%);top:-100px;right:-80px;animation:orbF 16s ease-in-out infinite}
+    @keyframes orbF{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}}
+
+    .page-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-family:'Courier Prime',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;position:relative;z-index:1;opacity:0;animation:fadeUp 0.6s ease forwards 0.1s}
+    .page-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+    .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;line-height:1;color:var(--white);position:relative;z-index:1;opacity:0;animation:fadeUp 0.7s ease forwards 0.25s}
+    .page-title em{font-style:italic;color:var(--gold-light)}
+    .page-subtitle{font-size:0.95rem;color:var(--muted);margin-top:1rem;max-width:500px;line-height:1.7;position:relative;z-index:1;opacity:0;animation:fadeUp 0.7s ease forwards 0.38s}
+
+    /* Counter row */
+    .counter-row{display:flex;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-mid);position:relative;z-index:1}
+    .counter-item{flex:1;padding:1.4rem 2rem;border-right:1px solid var(--border);text-align:center}
+    .counter-item:last-child{border-right:none}
+    .counter-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold);line-height:1}
+    .counter-label{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:0.2rem}
+
+    /* Projects list */
+    .projects-body{padding:5rem 3rem;position:relative;z-index:1}
+    .section-label{display:flex;align-items:center;gap:1rem;font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:3rem}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--border-gold)}
+
+    .project-item{
+      display:grid;grid-template-columns:80px 1fr 180px;
+      gap:2.5rem;align-items:start;
+      padding:3rem 0;
+      border-top:1px solid var(--border);
+      position:relative;overflow:hidden;
+      transition:padding-left 0.35s ease;
+    }
+    .project-item:last-child{border-bottom:1px solid var(--border)}
+    .project-item::before{
+      content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+      background:linear-gradient(to bottom,var(--gold),var(--gold-light));
+      transform:scaleY(0);transform-origin:top;
+      transition:transform 0.4s ease;
+    }
+    .project-item:hover{padding-left:1.5rem}
+    .project-item:hover::before{transform:scaleY(1)}
+
+    .project-meta{}
+    .project-num{font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.12em;color:var(--gold);display:block;margin-bottom:0.6rem}
+    .project-sector{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);line-height:1.6}
+
+    .project-body{}
+    .project-name{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:500;color:var(--white);line-height:1.15;margin-bottom:0.4rem;transition:color 0.2s}
+    .project-item:hover .project-name{color:var(--gold-light)}
+    .project-role{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--silver-dim);margin-bottom:1rem}
+    .project-desc{font-size:0.88rem;color:rgba(221,226,232,0.6);line-height:1.7;max-width:560px;margin-bottom:1.4rem}
+    .project-link{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s,gap 0.2s}
+    .project-link:hover{border-color:var(--gold);gap:0.8rem}
+    .project-link svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;transition:transform 0.2s}
+    .project-link:hover svg{transform:translate(2px,-2px)}
+
+    .project-side{padding-top:0.4rem;text-align:right}
+    .project-status{display:inline-block;padding:0.28rem 0.75rem;font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border-gold);color:var(--gold)}
+    .project-status.ongoing{border-color:rgba(77,184,133,0.3);color:var(--green)}
+    .project-year{display:block;font-family:'Courier Prime',monospace;font-size:0.6rem;color:var(--muted);margin-top:0.6rem;letter-spacing:0.08em}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    footer{position:relative;z-index:1;padding:1.8rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-family:'Courier Prime',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.06em}
+    .footer-links{display:flex;gap:1.5rem}
+    .footer-links a{font-family:'Courier Prime',monospace;font-size:0.65rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--gold)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:900px){
+      .project-item{grid-template-columns:1fr;gap:0.6rem;padding:2rem 0}
+      .project-meta{display:flex;gap:1.5rem;align-items:center}
+      .project-side{text-align:left}
+      .projects-body{padding:4rem 1.4rem}
+      nav{padding:1rem 1.4rem}
+      .nav-links a{padding:0.4rem 0.55rem;font-size:0.65rem}
+      .page-hero{padding:8rem 1.4rem 3rem}
+      .counter-item{padding:1rem}
+      footer{padding:1.5rem 1.4rem;flex-direction:column;gap:0.8rem}
+    }
+    @media(max-width:520px){.nav-links{display:none}.cursor-dot,.cursor-ring{display:none}body{cursor:auto}.counter-row{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a class="nav-logo" href="index.html">Chileleko <em>Lombe</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="impact.html">Impact</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-orb orb-a"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-bg-text" aria-hidden="true">Projects</div>
+  <div class="page-eyebrow">02 &nbsp;·&nbsp; Selected Work</div>
+  <h1 class="page-title">Institutional<br><em>Projects</em></h1>
+  <p class="page-subtitle">Digital platform delivery, QA coordination, and project support across Zambia's leading financial, regulatory, and commercial institutions.</p>
+</div>
+
+<div class="counter-row">
+  <div class="counter-item"><div class="counter-num">6</div><div class="counter-label">Total Projects</div></div>
+  <div class="counter-item"><div class="counter-num">5</div><div class="counter-label">Completed</div></div>
+  <div class="counter-item"><div class="counter-num">1</div><div class="counter-label">Ongoing</div></div>
+  <div class="counter-item"><div class="counter-num">4+</div><div class="counter-label">Sectors</div></div>
+</div>
+
+<div class="projects-body">
+  <div class="section-label">All Projects</div>
+
+  <div class="project-item reveal">
+    <div class="project-meta">
+      <span class="project-num">001</span>
+      <span class="project-sector">Government<br>Finance</span>
+    </div>
+    <div class="project-body">
+      <div class="project-name">Bank of Zambia — Website Upgrade</div>
+      <div class="project-role">Project Support &amp; QA Coordinator</div>
+      <p class="project-desc">Supported UI/UX redesign and feature enhancements for Zambia's central bank digital platform. Conducted usability testing and collaborated with developers to optimise navigation, accessibility, and content presentation.</p>
+      <a href="https://www.boz.zm" target="_blank" rel="noopener noreferrer" class="project-link">Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    </div>
+    <div class="project-side"><span class="project-status">Completed</span><span class="project-year">2026</span></div>
+  </div>
+
+  <div class="project-item reveal">
+    <div class="project-meta">
+      <span class="project-num">002</span>
+      <span class="project-sector">Regulatory<br>Capital Markets</span>
+    </div>
+    <div class="project-body">
+      <div class="project-name">Securities &amp; Exchange Commission Zambia</div>
+      <div class="project-role">Project Coordinator &amp; QA Tester</div>
+      <p class="project-desc">Coordinated platform revamp between engineering and client teams. Conducted QA testing, issue tracking, and compliance-aligned delivery through structured client reporting.</p>
+      <a href="https://www.seczambia.org.zm" target="_blank" rel="noopener noreferrer" class="project-link">Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    </div>
+    <div class="project-side"><span class="project-status">Completed</span><span class="project-year">2025</span></div>
+  </div>
+
+  <div class="project-item reveal">
+    <div class="project-meta">
+      <span class="project-num">003</span>
+      <span class="project-sector">Exchange<br>Capital Markets</span>
+    </div>
+    <div class="project-body">
+      <div class="project-name">Lusaka Securities Exchange (LUSE)</div>
+      <div class="project-role">Project Support &amp; QA Coordinator</div>
+      <p class="project-desc">Assisted integration and QA of new platform features. Conducted scenario-based testing across devices and produced structured progress reports for stakeholders.</p>
+      <a href="https://www.luse.co.zm" target="_blank" rel="noopener noreferrer" class="project-link">Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    </div>
+    <div class="project-side"><span class="project-status">Completed</span><span class="project-year">2024</span></div>
+  </div>
+
+  <div class="project-item reveal">
+    <div class="project-meta">
+      <span class="project-num">004</span>
+      <span class="project-sector">Mining<br>Investment</span>
+    </div>
+    <div class="project-body">
+      <div class="project-name">ZCCM Investments Holdings Plc</div>
+      <div class="project-role">Project Coordinator &amp; QA Tester</div>
+      <p class="project-desc">Supported coordination and quality assurance for one of Zambia's leading investment and mining holding companies. Acted as liaison between technical and client stakeholders ensuring accurate requirements capture and timely delivery.</p>
+      <a href="https://zccm-ih.financifi.com" target="_blank" rel="noopener noreferrer" class="project-link">Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    </div>
+    <div class="project-side"><span class="project-status">Completed</span><span class="project-year">2025</span></div>
+  </div>
+
+  <div class="project-item reveal">
+    <div class="project-meta">
+      <span class="project-num">005</span>
+      <span class="project-sector">E-Commerce<br>Web Platform</span>
+    </div>
+    <div class="project-body">
+      <div class="project-name">Supergold Vending — Website &amp; Ops Platform</div>
+      <div class="project-role">Project Coordinator &amp; QA Tester</div>
+      <p class="project-desc">Coordinated end-to-end delivery of the web platform, managing timelines, documentation, and stakeholder communication. Served as primary liaison translating business requirements into technical briefs.</p>
+      <a href="https://supergoldvending.com" target="_blank" rel="noopener noreferrer" class="project-link">Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    </div>
+    <div class="project-side"><span class="project-status">Completed</span><span class="project-year">2025</span></div>
+  </div>
+
+  <div class="project-item reveal">
+    <div class="project-meta">
+      <span class="project-num">006</span>
+      <span class="project-sector">Professional<br>Association</span>
+    </div>
+    <div class="project-body">
+      <div class="project-name">Association of Consulting Engineers of Zambia</div>
+      <div class="project-role">Platform Support &amp; Maintenance Coordinator</div>
+      <p class="project-desc">Provide ongoing platform support and updates for ACEZ's digital presence, responding to evolving organisational needs. Coordinate with technical teams to ensure the platform remains current, functional, and standards-aligned.</p>
+      <a href="https://www.acez.co.zm" target="_blank" rel="noopener noreferrer" class="project-link">Visit Live Site <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    </div>
+    <div class="project-side"><span class="project-status ongoing">Ongoing</span><span class="project-year">2025–</span></div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Chileleko Lombe Moonga · Lusaka, Zambia</span>
+  <div class="footer-links"><a href="about.html">About</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a></div>
+</footer>
+<script>
+  const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+  (function anim(){dot.style.left=mx+'px';dot.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+  document.querySelectorAll('a,.project-item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+  });
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

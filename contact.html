@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#16181d">
+  <title>Contact — Chileleko Lombe Moonga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Courier+Prime&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#16181d;--bg-mid:#1c1f26;--bg-card:#20232b;--bg-hover:#252931;--gold:#c8a45a;--gold-light:#dfc07e;--silver:#a8b4c0;--silver-dim:#6e7e8e;--cream:#dde2e8;--white:#f0f2f5;--muted:#5a6878;--border:rgba(168,180,192,0.1);--border-gold:rgba(200,164,90,0.2);--green:#4db885}
+    html{scroll-behavior:smooth;color-scheme:dark}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg)!important;color:var(--cream)!important;line-height:1.6;overflow-x:hidden;min-height:100vh;cursor:none}
+    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.5}
+    .cursor-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+    .cursor-ring{width:32px;height:32px;border:1px solid rgba(200,164,90,0.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.15s ease}
+    .cursor-ring.hover{width:52px;height:52px;border-color:var(--gold);background:rgba(200,164,90,0.06)}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:rgba(22,24,29,0.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;letter-spacing:0.04em;color:var(--white);text-decoration:none}
+    .nav-logo em{font-style:italic;color:var(--gold)}
+    .nav-links{display:flex;gap:0;list-style:none}
+    .nav-links a{display:block;padding:0.4rem 0.9rem;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--silver-dim);text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);border-color:var(--gold)}
+
+    /* Full-height hero for contact */
+    .contact-hero{
+      min-height:100vh;display:grid;grid-template-columns:1fr 1fr;
+      align-items:center;padding:8rem 3rem 5rem;
+      position:relative;overflow:hidden;gap:5rem;
+    }
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,180,192,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(168,180,192,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+    .hero-orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+    .orb-a{width:500px;height:500px;background:radial-gradient(circle,rgba(200,164,90,0.08) 0%,transparent 70%);top:-100px;left:-100px;animation:orbF1 16s ease-in-out infinite}
+    .orb-b{width:350px;height:350px;background:radial-gradient(circle,rgba(77,184,133,0.05) 0%,transparent 70%);bottom:-50px;right:10%;animation:orbF2 20s ease-in-out infinite}
+    @keyframes orbF1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,30px)}}
+    @keyframes orbF2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-40px)}}
+
+    /* Left side */
+    .contact-left{position:relative;z-index:1}
+    .page-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-family:'Courier Prime',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem;opacity:0;animation:fadeUp 0.6s ease forwards 0.1s}
+    .page-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+    .contact-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1;color:var(--white);margin-bottom:1.4rem;opacity:0;animation:fadeUp 0.7s ease forwards 0.25s}
+    .contact-heading em{font-style:italic;color:var(--gold-light)}
+    .contact-sub{font-size:0.95rem;color:var(--muted);line-height:1.8;max-width:420px;margin-bottom:3rem;opacity:0;animation:fadeUp 0.7s ease forwards 0.38s}
+
+    .contact-items{display:flex;flex-direction:column;gap:0;margin-bottom:2.5rem;opacity:0;animation:fadeUp 0.7s ease forwards 0.5s}
+    .contact-row{display:flex;align-items:baseline;gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--border);transition:padding-left 0.2s}
+    .contact-row:first-child{border-top:1px solid var(--border)}
+    .contact-row:hover{padding-left:0.5rem}
+    .c-key{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);min-width:75px}
+    .c-val{font-size:0.9rem;color:rgba(221,226,232,0.78)}
+    .c-val a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s,color 0.2s}
+    .c-val a:hover{color:var(--gold-light);border-color:var(--gold-light)}
+
+    .avail-badge{display:inline-flex;align-items:center;gap:0.6rem;padding:0.55rem 1.1rem;border:1px solid rgba(77,184,133,0.25);font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);opacity:0;animation:fadeUp 0.7s ease forwards 0.6s}
+    .avail-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+
+    /* Right — form */
+    .contact-right{position:relative;z-index:1;opacity:0;animation:fadeUp 0.8s ease forwards 0.4s}
+    .form-wrap{border:1px solid var(--border);background:var(--bg-card);padding:2.5rem;position:relative;overflow:hidden}
+    .form-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gold-light),transparent)}
+    .form-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--white);margin-bottom:0.3rem}
+    .form-sub{font-size:0.8rem;color:var(--muted);margin-bottom:2rem}
+    .form-row-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+    .form-group{margin-bottom:1rem}
+    .form-group:last-of-type{margin-bottom:1.5rem}
+    .form-label{display:block;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.45rem}
+    .form-input,.form-textarea{width:100%;padding:0.8rem 1rem;background:var(--bg-mid);border:1px solid var(--border);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s,background 0.2s;-webkit-appearance:none;border-radius:0}
+    .form-input:focus,.form-textarea:focus{border-color:var(--border-gold);background:var(--bg-hover)}
+    .form-input::placeholder,.form-textarea::placeholder{color:var(--muted)}
+    .form-textarea{resize:vertical;min-height:130px}
+    .form-submit{width:100%;padding:0.95rem;background:var(--gold);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:none;position:relative;overflow:hidden;transition:background 0.2s,transform 0.2s}
+    .form-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.18) 50%,transparent 70%);transform:translateX(-100%);transition:transform 0.5s ease}
+    .form-submit:hover{background:var(--gold-light);transform:translateY(-1px)}
+    .form-submit:hover::before{transform:translateX(100%)}
+    .form-note{text-align:center;margin-top:0.8rem;font-family:'Courier Prime',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.06em}
+
+    /* Success state */
+    .form-success{display:none;text-align:center;padding:3rem 1rem}
+    .form-success.show{display:block}
+    .success-icon{font-size:2.5rem;margin-bottom:1rem;animation:popIn 0.5s ease}
+    @keyframes popIn{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+    .success-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--white);margin-bottom:0.5rem}
+    .success-sub{font-size:0.85rem;color:var(--muted)}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    footer{position:relative;z-index:1;padding:1.8rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-family:'Courier Prime',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.06em}
+    .footer-links{display:flex;gap:1.5rem}
+    .footer-links a{font-family:'Courier Prime',monospace;font-size:0.65rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--gold)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:900px){
+      .contact-hero{grid-template-columns:1fr;gap:3rem;padding:8rem 1.4rem 4rem;min-height:auto}
+      nav{padding:1rem 1.4rem}.nav-links a{padding:0.4rem 0.55rem;font-size:0.65rem}
+      footer{padding:1.5rem 1.4rem;flex-direction:column;gap:0.8rem}
+      .form-row-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:520px){.nav-links{display:none}.cursor-dot,.cursor-ring{display:none}body{cursor:auto}.form-submit{cursor:pointer}}
+  </style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a class="nav-logo" href="index.html">Chileleko <em>Lombe</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="impact.html">Impact</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="contact-hero">
+  <div class="hero-orb orb-a"></div>
+  <div class="hero-orb orb-b"></div>
+  <div class="hero-grid"></div>
+
+  <div class="contact-left">
+    <div class="page-eyebrow">05 &nbsp;·&nbsp; Get in Touch</div>
+    <h1 class="contact-heading">Let's build<br>something<br><em>together.</em></h1>
+    <p class="contact-sub">Open to operations, revenue, and project coordination roles — locally in Zambia and globally via remote. Whether you have an opportunity or just want to connect, I'd love to hear from you.</p>
+    <div class="contact-items">
+      <div class="contact-row"><span class="c-key">Email</span><span class="c-val"><a href="mailto:ChilelekoLM@Outlook.com">ChilelekoLM@Outlook.com</a></span></div>
+      <div class="contact-row"><span class="c-key">Phone</span><span class="c-val"><a href="tel:+260779595783">+260 779 595 783</a></span></div>
+      <div class="contact-row"><span class="c-key">Location</span><span class="c-val">Lusaka, Zambia</span></div>
+      <div class="contact-row"><span class="c-key">Remote</span><span class="c-val">Available globally</span></div>
+      <div class="contact-row"><span class="c-key">Languages</span><span class="c-val">English · Bemba · Nyanja</span></div>
+    </div>
+    <div class="avail-badge"><span class="avail-dot"></span>Available for new opportunities</div>
+  </div>
+
+  <div class="contact-right">
+    <div class="form-wrap">
+      <div id="formBody">
+        <div class="form-title">Send a Message</div>
+        <div class="form-sub">Fill in the form and I'll get back to you promptly.</div>
+        <div class="form-row-grid">
+          <div class="form-group"><label class="form-label" for="name">Your Name</label><input class="form-input" type="text" id="name" placeholder="Full name"/></div>
+          <div class="form-group"><label class="form-label" for="email">Email Address</label><input class="form-input" type="email" id="email" placeholder="your@email.com"/></div>
+        </div>
+        <div class="form-group"><label class="form-label" for="subject">Subject</label><input class="form-input" type="text" id="subject" placeholder="Job opportunity, project, collaboration..."/></div>
+        <div class="form-group"><label class="form-label" for="message">Message</label><textarea class="form-textarea" id="message" placeholder="Tell me about the opportunity or project..."></textarea></div>
+        <button class="form-submit" onclick="handleSubmit()">Send Message →</button>
+        <p class="form-note">Or email directly: ChilelekoLM@Outlook.com</p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✦</div>
+        <div class="success-title">Message Sent!</div>
+        <div class="success-sub">Thanks for reaching out — I'll be in touch shortly.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Chileleko Lombe Moonga · Lusaka, Zambia</span>
+  <div class="footer-links"><a href="about.html">About</a><a href="projects.html">Projects</a><a href="resume.html">Resume</a></div>
+</footer>
+
+<script>
+  const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+  (function anim(){dot.style.left=mx+'px';dot.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+  document.querySelectorAll('a,button,.form-input,.form-textarea,.contact-row').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+  });
+  function handleSubmit(){
+    const name=document.getElementById('name').value.trim();
+    const email=document.getElementById('email').value.trim();
+    const message=document.getElementById('message').value.trim();
+    if(!name||!email||!message){alert('Please fill in your name, email, and message.');return;}
+    const subject=document.getElementById('subject').value||'Portfolio Enquiry';
+    const body=`Name: ${name}\nEmail: ${email}\n\n${message}`;
+    window.location.href=`mailto:ChilelekoLM@Outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    document.getElementById('formBody').style.display='none';
+    document.getElementById('formSuccess').classList.add('show');
+  }
+</script>
+</body>
+</html>

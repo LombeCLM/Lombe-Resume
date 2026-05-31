@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#1a1a1f">
+  <title>Chileleko Lombe Moonga — Business & Revenue Operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Courier+Prime&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: dark;
+      --bg:         #16181d;
+      --bg-mid:     #1c1f26;
+      --bg-card:    #20232b;
+      --bg-hover:   #252931;
+      --gold:       #c8a45a;
+      --gold-light: #dfc07e;
+      --silver:     #a8b4c0;
+      --silver-dim: #6e7e8e;
+      --cream:      #dde2e8;
+      --white:      #f0f2f5;
+      --muted:      #5a6878;
+      --border:     rgba(168,180,192,0.1);
+      --border-gold:rgba(200,164,90,0.2);
+      --green:      #4db885;
+    }
+
+    html { scroll-behavior: smooth; background: #16181d; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #16181d !important;
+      color: #dde2e8 !important;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s;
+    }
+
+    .cursor-ring {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(200,164,90,0.4);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.15s ease;
+    }
+
+    .cursor-ring.hover {
+      width: 48px; height: 48px;
+      border-color: var(--gold);
+      background: rgba(200,164,90,0.06);
+    }
+
+    /* ── GRAIN ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1; opacity: 0.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(22,24,29,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 400; letter-spacing: 0.04em;
+      color: var(--white); text-decoration: none;
+    }
+
+    .nav-logo em { font-style: italic; color: var(--gold); }
+
+    .nav-links { display: flex; gap: 0; list-style: none; }
+
+    .nav-links a {
+      display: block; padding: 0.4rem 0.9rem;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--silver-dim); text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--gold); border-color: var(--gold);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 9rem 3rem 5rem;
+      text-align: center;
+    }
+
+    /* Photo circle */
+    .hero-photo-wrap {
+      position: relative; z-index: 2; margin-bottom: 2rem;
+      opacity: 0; animation: fadeSlideUp 0.8s ease forwards; animation-delay: 0.1s;
+    }
+
+    .hero-photo-circle {
+      width: 160px; height: 160px; border-radius: 50%;
+      overflow: hidden; position: relative;
+      border: 2px solid var(--border-gold);
+      box-shadow: 0 0 0 6px rgba(200,164,90,0.07), 0 0 40px rgba(200,164,90,0.12);
+      transition: box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+
+    .hero-photo-circle:hover {
+      box-shadow: 0 0 0 8px rgba(200,164,90,0.12), 0 0 60px rgba(200,164,90,0.2);
+    }
+
+    .hero-photo-circle img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block; filter: grayscale(10%);
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    .hero-photo-circle:hover img { filter: grayscale(0%); transform: scale(1.04); }
+
+    /* Tap hint ring animation */
+    .photo-ring {
+      position: absolute; inset: -8px; border-radius: 50%;
+      border: 1px solid rgba(200,164,90,0.25);
+      animation: ringPulse 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .photo-ring-2 {
+      position: absolute; inset: -16px; border-radius: 50%;
+      border: 1px solid rgba(200,164,90,0.1);
+      animation: ringPulse 3s ease-in-out infinite; animation-delay: 0.5s;
+      pointer-events: none;
+    }
+
+    @keyframes ringPulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(1.03); }
+    }
+
+    /* Tap hint label */
+    .tap-hint {
+      position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); white-space: nowrap;
+      animation: blink 2.5s ease-in-out infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* Reveal overlay */
+    .reveal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(22,24,29,0.96);
+      backdrop-filter: blur(12px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.4rem; padding: 2.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 999;
+    }
+
+    .reveal-overlay.show { opacity: 1; pointer-events: all; }
+
+    .reveal-photo-mini {
+      width: 72px; height: 72px; border-radius: 50%; overflow: hidden;
+      border: 2px solid var(--border-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .reveal-photo-mini img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+
+    .reveal-joke {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: var(--gold-light); text-align: center; line-height: 1.65;
+      max-width: 320px;
+    }
+
+    .reveal-divider {
+      width: 40px; height: 1px; background: var(--border-gold);
+    }
+
+    .reveal-joke-punchline {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-align: center;
+    }
+
+    .reveal-contact { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; max-width: 300px; }
+
+    .reveal-contact-item {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.7rem 1rem;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .reveal-contact-item:hover { border-color: var(--border-gold); background: var(--bg-card); }
+    .reveal-contact-item svg { flex-shrink: 0; color: var(--gold); }
+    .reveal-contact-item span { font-size: 0.82rem; color: var(--cream); }
+
+    .reveal-close {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; margin-top: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .reveal-close:hover { color: var(--gold); }
+
+    /* Hero text */
+    .hero-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; max-width: 700px;
+    }
+
+    .hero-greeting {
+      font-size: 1rem; color: var(--muted); margin-bottom: 0.6rem;
+      font-family: 'Courier Prime', monospace; letter-spacing: 0.1em;
+      opacity: 0; animation: fadeSlideUp 0.7s ease forwards; animation-delay: 0.3s;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 300; line-height: 1; letter-spacing: -0.02em;
+      color: var(--white); margin-bottom: 1rem;
+      opacity: 0; animation: fadeSlideUp 0.8s ease forwards; animation-delay: 0.4s;
+    }
+
+    .hero-name .italic { font-style: italic; color: var(--gold); }
+    .hero-name .outline { -webkit-text-stroke: 1px rgba(240,242,245,0.25); color: transparent; }
+
+    .hero-role-wrap {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.6rem;
+      opacity: 0; animation: fadeSlideUp 0.8s ease forwards; animation-delay: 0.5s;
+    }
+
+    .role-line { width: 24px; height: 1px; background: var(--gold); flex-shrink: 0; }
+
+    .hero-role {
+      font-size: 0.88rem; letter-spacing: 0.08em;
+      color: var(--silver-dim); overflow: hidden; height: 1.4em;
+    }
+
+    .role-ticker::before { content: "Business & Revenue Operations"; animation: tickerText 8s steps(1) infinite; }
+
+    @keyframes tickerText {
+      0%   { content: "Business & Revenue Operations"; }
+      25%  { content: "CRM & HubSpot Specialist"; }
+      50%  { content: "Cross-functional Project Coordinator"; }
+      75%  { content: "QA & Process Improvement"; }
+    }
+
+    .hero-desc {
+      font-size: 1rem; color: rgba(221,226,232,0.62);
+      max-width: 520px; line-height: 1.8; margin-bottom: 2.8rem; text-align: center;
+      opacity: 0; animation: fadeSlideUp 0.8s ease forwards; animation-delay: 0.6s;
+    }
+
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeSlideUp 0.8s ease forwards; animation-delay: 0.72s;
+    }
+
+    .btn-primary {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      background: var(--gold); color: var(--bg);
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: none;
+      transition: transform 0.2s;
+    }
+
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+      transform: translateX(-100%); transition: transform 0.5s ease;
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary:hover::before { transform: translateX(100%); }
+    .btn-arrow { display: inline-block; transition: transform 0.25s; }
+    .btn-primary:hover .btn-arrow { transform: translateX(4px); }
+
+    .btn-ghost {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 2rem; background: transparent; color: var(--cream);
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; border: 1px solid var(--border); cursor: none;
+      transition: border-color 0.25s, color 0.25s, transform 0.2s;
+    }
+
+    .btn-ghost::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--border); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-ghost:hover { border-color: var(--silver); color: var(--white); transform: translateY(-2px); }
+    .btn-ghost:hover::before { transform: scaleX(1); }
+    .btn-ghost span, .btn-ghost .btn-arrow { position: relative; z-index: 1; }
+    .btn-ghost .btn-arrow { transition: transform 0.25s; }
+    .btn-ghost:hover .btn-arrow { transform: translateX(4px); }
+
+    /* Stat chips below buttons */
+    .hero-chips {
+      display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center;
+      margin-top: 2rem;
+      opacity: 0; animation: fadeSlideUp 0.8s ease forwards; animation-delay: 0.85s;
+    }
+
+    .hero-chip {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem; letter-spacing: 0.08em; color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .hero-chip:hover { border-color: var(--border-gold); color: var(--gold); }
+    .hero-chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeSlideUp 0.8s ease forwards; animation-delay: 1s;
+      z-index: 2;
+    }
+
+    .scroll-track {
+      width: 1px; height: 48px; background: var(--border);
+      position: relative; overflow: hidden;
+    }
+
+    .scroll-fill {
+      position: absolute; top: 0; left: 0; right: 0; background: var(--gold);
+      animation: scrollFill 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollFill {
+      0%   { height: 0%; top: 0; }
+      50%  { height: 100%; top: 0; }
+      100% { height: 0%; top: 100%; }
+    }
+
+    .scroll-text {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+    }
+
+    @keyframes fadeSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    @media (max-width: 768px) {
+      .hero { padding: 8rem 1.4rem 4rem; }
+      .hero-photo-circle { width: 130px; height: 130px; }
+    }
+
+    @media (max-width: 520px) {
+      .nav-links { display: none; }
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
+      .btn-primary, .btn-ghost { cursor: pointer; }
+    }
+
+    
+        /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden; border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 0;
+      background: var(--bg-mid);
+      position: relative; z-index: 2;
+    }
+
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: marquee 24s linear infinite;
+    }
+
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 1.2rem;
+      padding: 0 1.8rem;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--silver-dim); white-space: nowrap;
+    }
+
+    .marquee-item .dot { color: var(--gold); font-size: 0.45rem; }
+
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── QUICK NAV CARDS ── */
+    .cards-section {
+      position: relative; z-index: 2;
+      padding: 5rem 3rem;
+    }
+
+    .cards-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 300;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+
+    .cards-sub {
+      font-size: 0.88rem; color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .nav-card {
+      background: var(--bg-card);
+      padding: 2rem 1.8rem;
+      text-decoration: none;
+      display: flex; flex-direction: column;
+      gap: 0.5rem;
+      transition: background 0.25s;
+      position: relative; overflow: hidden;
+      cursor: none;
+    }
+
+    .nav-card-shine {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(200,164,90,0.04) 60%, transparent 80%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+
+    .nav-card:hover { background: var(--bg-hover); }
+    .nav-card:hover .nav-card-shine { opacity: 1; }
+
+    .nav-card-bar {
+      position: absolute; bottom: 0; left: 0;
+      height: 2px; width: 0;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      transition: width 0.35s ease;
+    }
+
+    .nav-card:hover .nav-card-bar { width: 100%; }
+
+    .nav-card-num {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold);
+    }
+
+    .nav-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 500; color: var(--white);
+    }
+
+    .nav-card-desc {
+      font-size: 0.8rem; color: var(--muted); line-height: 1.5;
+    }
+
+    .nav-card-arrow {
+      margin-top: auto; padding-top: 1.2rem;
+      font-size: 0.9rem; color: var(--silver-dim);
+      display: flex; align-items: center; gap: 0.4rem;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .nav-card:hover .nav-card-arrow { color: var(--gold); gap: 0.7rem; }
+
+    /* ── TOOLS STRIP ── */
+    .tools-strip {
+      position: relative; z-index: 2;
+      padding: 4rem 3rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg-mid);
+    }
+
+    .tools-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.6rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+
+    .tools-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border-gold);
+    }
+
+    .tools-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .tool-chip {
+      padding: 0.38rem 0.85rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem; letter-spacing: 0.06em;
+      color: var(--silver-dim);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .tool-chip:hover {
+      border-color: var(--gold); color: var(--gold);
+      background: rgba(200,164,90,0.05);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 2;
+      padding: 1.8rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .footer-copy {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em;
+    }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    .footer-links a {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeSlideLeft {
+      from { opacity: 0; transform: translateX(24px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+      }
+      .hero-photo-wrap { grid-column: 1; grid-row: 1; margin-bottom: 1rem; }
+      .hero-photo-frame { width: 160px; height: 200px; margin: 0 auto; }
+      .hero-content { grid-column: 1 !important; grid-row: 2 !important; }
+      .scroll-indicator { grid-column: 1; grid-row: 3; position: static; margin-top: 2rem; flex-direction: row; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.4rem; }
+      .nav-links a { padding: 0.4rem 0.55rem; font-size: 0.65rem; }
+      .hero { padding: 8rem 1.4rem 4rem; }
+      .cards-section, .tools-strip { padding-left: 1.4rem; padding-right: 1.4rem; }
+      .scroll-indicator { display: none; }
+      footer { padding: 1.5rem 1.4rem; flex-direction: column; gap: 0.8rem; }
+    }
+
+    @media (max-width: 520px) {
+      .nav-links { display: none; }
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">Chileleko <em>Lombe</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="resume.html">Resume</a></li>
+    <li><a href="impact.html">Impact</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+  <div class="hero-orb orb-3"></div>
+  <div class="hero-grid"></div>
+
+  <!-- Reveal overlay (tap on photo) -->
+  <div class="reveal-overlay" id="revealOverlay" onclick="closeReveal(event)">
+    <div class="reveal-photo-mini">
+      <img src="profile.jpg" alt="Chileleko Lombe Moonga"/>
+    </div>
+    <div class="reveal-joke">"I don't always close deals — but when I do, I've already automated the follow-up sequence."</div>
+    <div class="reveal-divider"></div>
+    <div class="reveal-joke-punchline">— A RevOps professional, probably</div>
+    <div class="reveal-contact">
+      <a href="mailto:ChilelekoLM@Outlook.com" class="reveal-contact-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        <span>ChilelekoLM@Outlook.com</span>
+      </a>
+      <a href="tel:+260779595783" class="reveal-contact-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+        <span>+260 779 595 783</span>
+      </a>
+    </div>
+    <span class="reveal-close" onclick="closeReveal()">✕ tap anywhere to close</span>
+  </div>
+
+  <!-- Circular photo -->
+  <div class="hero-photo-wrap">
+    <div class="hero-photo-circle" onclick="openReveal()" id="photoCircle">
+      <img src="profile.jpg" alt="Chileleko Lombe Moonga"/>
+    </div>
+    <div class="photo-ring"></div>
+    <div class="photo-ring-2"></div>
+    <span class="tap-hint">tap to connect</span>
+  </div>
+
+  <!-- Text content -->
+  <div class="hero-content">
+    <div class="hero-greeting">Hi, I'm</div>
+    <h1 class="hero-name">
+      Chileleko <span class="italic">Lombe</span><br>
+      <span class="outline">Moonga</span>
+    </h1>
+    <div class="hero-role-wrap">
+      <span class="role-line"></span>
+      <span class="hero-role"><span class="role-ticker"></span></span>
+      <span class="role-line"></span>
+    </div>
+    <p class="hero-desc">
+      Operations professional with 4+ years building scalable systems, leading cross-functional projects, and delivering institutional-grade digital platforms across Zambia.
+    </p>
+    <div class="hero-ctas">
+      <a href="projects.html" class="btn-primary">View Projects <span class="btn-arrow">→</span></a>
+      <a href="contact.html" class="btn-ghost"><span>Get in Touch</span><span class="btn-arrow">→</span></a>
+    </div>
+    <div class="hero-chips">
+      <span class="hero-chip"><span class="hero-chip-dot"></span>4+ Years Experience</span>
+      <span class="hero-chip"><span class="hero-chip-dot"></span>HubSpot Certified ×2</span>
+      <span class="hero-chip"><span class="hero-chip-dot"></span>6 Institutional Projects</span>
+      <span class="hero-chip"><span class="hero-chip-dot"></span>Open to Remote</span>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-track"><div class="scroll-fill"></div></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Revenue Operations <span class="dot">✦</span></span>
+    <span class="marquee-item">HubSpot Certified <span class="dot">✦</span></span>
+    <span class="marquee-item">CRM Administration <span class="dot">✦</span></span>
+    <span class="marquee-item">Project Coordination <span class="dot">✦</span></span>
+    <span class="marquee-item">QA &amp; UAT <span class="dot">✦</span></span>
+    <span class="marquee-item">Process Improvement <span class="dot">✦</span></span>
+    <span class="marquee-item">KPI Dashboards <span class="dot">✦</span></span>
+    <span class="marquee-item">Workflow Automation <span class="dot">✦</span></span>
+    <span class="marquee-item">Vendor Management <span class="dot">✦</span></span>
+    <span class="marquee-item">Stakeholder Communication <span class="dot">✦</span></span>
+    <span class="marquee-item">Revenue Operations <span class="dot">✦</span></span>
+    <span class="marquee-item">HubSpot Certified <span class="dot">✦</span></span>
+    <span class="marquee-item">CRM Administration <span class="dot">✦</span></span>
+    <span class="marquee-item">Project Coordination <span class="dot">✦</span></span>
+    <span class="marquee-item">QA &amp; UAT <span class="dot">✦</span></span>
+    <span class="marquee-item">Process Improvement <span class="dot">✦</span></span>
+    <span class="marquee-item">KPI Dashboards <span class="dot">✦</span></span>
+    <span class="marquee-item">Workflow Automation <span class="dot">✦</span></span>
+    <span class="marquee-item">Vendor Management <span class="dot">✦</span></span>
+    <span class="marquee-item">Stakeholder Communication <span class="dot">✦</span></span>
+  </div>
+</div>
+
+<!-- CARDS -->
+<section class="cards-section">
+  <h2 class="cards-heading">Explore the Portfolio</h2>
+  <p class="cards-sub">Navigate to any section below</p>
+  <div class="cards-grid">
+    <a href="about.html" class="nav-card">
+      <div class="nav-card-shine"></div>
+      <span class="nav-card-num">01</span>
+      <span class="nav-card-title">About Me</span>
+      <span class="nav-card-desc">Background, competencies, and what drives my work in operations.</span>
+      <span class="nav-card-arrow">Explore →</span>
+      <div class="nav-card-bar"></div>
+    </a>
+    <a href="projects.html" class="nav-card">
+      <div class="nav-card-shine"></div>
+      <span class="nav-card-num">02</span>
+      <span class="nav-card-title">Projects</span>
+      <span class="nav-card-desc">Institutional digital platforms across finance, regulation, and commerce.</span>
+      <span class="nav-card-arrow">Explore →</span>
+      <div class="nav-card-bar"></div>
+    </a>
+    <a href="resume.html" class="nav-card">
+      <div class="nav-card-shine"></div>
+      <span class="nav-card-num">03</span>
+      <span class="nav-card-title">Resume &amp; Certifications</span>
+      <span class="nav-card-desc">Full work history, education, and professional credentials.</span>
+      <span class="nav-card-arrow">Explore →</span>
+      <div class="nav-card-bar"></div>
+    </a>
+    <a href="impact.html" class="nav-card">
+      <div class="nav-card-shine"></div>
+      <span class="nav-card-num">04</span>
+      <span class="nav-card-title">Impact</span>
+      <span class="nav-card-desc">Numbers, skill proficiency, tools stack, and how I work.</span>
+      <span class="nav-card-arrow">Explore →</span>
+      <div class="nav-card-bar"></div>
+    </a>
+    <a href="contact.html" class="nav-card">
+      <div class="nav-card-shine"></div>
+      <span class="nav-card-num">05</span>
+      <span class="nav-card-title">Contact</span>
+      <span class="nav-card-desc">Open to local Zambian and global remote opportunities.</span>
+      <span class="nav-card-arrow">Explore →</span>
+      <div class="nav-card-bar"></div>
+    </a>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<div class="tools-strip">
+  <div class="tools-label">Core Tools &amp; Platforms</div>
+  <div class="tools-row">
+    <span class="tool-chip">HubSpot CRM</span>
+    <span class="tool-chip">Google Data Studio</span>
+    <span class="tool-chip">Microsoft Excel</span>
+    <span class="tool-chip">ClickUp</span>
+    <span class="tool-chip">Linear</span>
+    <span class="tool-chip">Monday.com</span>
+    <span class="tool-chip">Trello</span>
+    <span class="tool-chip">Slack</span>
+    <span class="tool-chip">Zoho CRM</span>
+    <span class="tool-chip">Microsoft Clarity</span>
+    <span class="tool-chip">Google Workspace</span>
+    <span class="tool-chip">Moqups</span>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Chileleko Lombe Moonga · Lusaka, Zambia</span>
+  <div class="footer-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Photo reveal
+  function openReveal() {
+    document.getElementById('revealOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReveal(e) {
+    if (e && e.target.closest('.reveal-contact-item')) return;
+    document.getElementById('revealOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  // Custom cursor
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  function animCursor() {
+    dot.style.left  = mx + 'px';
+    dot.style.top   = my + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  document.querySelectorAll('a, button, .tool-chip, .floater-item').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+  });
+</script>
+</body>
+</html>

@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="color-scheme" content="dark">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#16181d">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>About — Chileleko Lombe Moonga</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Courier+Prime&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
+      color-scheme:dark;
       --bg:#16181d;--bg-mid:#1c1f26;--bg-card:#20232b;--bg-hover:#252931;
       --gold:#c8a45a;--gold-light:#dfc07e;--silver:#a8b4c0;--silver-dim:#6e7e8e;
       --cream:#dde2e8;--white:#f0f2f5;--muted:#5a6878;
       --border:rgba(168,180,192,0.1);--border-gold:rgba(200,164,90,0.2);--green:#4db885;
     }
-    html{scroll-behavior:smooth;color-scheme:dark}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg)!important;color:var(--cream)!important;line-height:1.6;overflow-x:hidden;min-height:100vh;cursor:none}
+    html{scroll-behavior:smooth;background:#16181d}
+    body{font-family:'DM Sans',sans-serif;background:#16181d!important;color:#dde2e8!important;line-height:1.6;overflow-x:hidden;min-height:100vh;cursor:none}
     body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.5}
 
     .cursor-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
@@ -32,156 +32,207 @@
     .nav-links a{display:block;padding:0.4rem 0.9rem;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--silver-dim);text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s}
     .nav-links a:hover,.nav-links a.active{color:var(--gold);border-color:var(--gold)}
 
-    /* PAGE HERO */
+    /* ── HERO ── */
     .page-hero{
-      min-height:55vh;display:flex;flex-direction:column;justify-content:flex-end;
-      padding:9rem 3rem 4rem;position:relative;overflow:hidden;
+      min-height:100vh;
+      display:grid;grid-template-columns:1fr 1fr;
+      align-items:center;
+      padding:8rem 3rem 5rem;
+      position:relative;overflow:hidden;gap:5rem;
     }
-    .hero-bg-text{
-      position:absolute;right:-2rem;top:50%;transform:translateY(-50%);
-      font-family:'Cormorant Garamond',serif;font-size:clamp(8rem,18vw,18rem);
-      font-weight:300;font-style:italic;
-      color:transparent;-webkit-text-stroke:1px rgba(200,164,90,0.07);
-      pointer-events:none;user-select:none;white-space:nowrap;line-height:1;
-    }
-    .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
-    .orb-a{width:400px;height:400px;background:radial-gradient(circle,rgba(200,164,90,0.07) 0%,transparent 70%);top:-80px;right:-60px;animation:orbF1 14s ease-in-out infinite}
-    .orb-b{width:300px;height:300px;background:radial-gradient(circle,rgba(77,184,133,0.04) 0%,transparent 70%);bottom:-40px;left:10%;animation:orbF2 18s ease-in-out infinite}
+
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,180,192,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(168,180,192,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+    .hero-orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+    .orb-a{width:500px;height:500px;background:radial-gradient(circle,rgba(200,164,90,0.07) 0%,transparent 70%);top:-100px;right:-80px;animation:orbF1 16s ease-in-out infinite}
+    .orb-b{width:300px;height:300px;background:radial-gradient(circle,rgba(77,184,133,0.04) 0%,transparent 70%);bottom:0;left:5%;animation:orbF2 20s ease-in-out infinite}
     @keyframes orbF1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,20px)}}
     @keyframes orbF2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
 
-    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,180,192,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(168,180,192,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+    /* Photo side */
+    .hero-photo-col{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:2rem;opacity:0;animation:fadeUp 0.8s ease forwards 0.2s}
 
-    .page-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-family:'Courier Prime',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;position:relative;z-index:1;opacity:0;animation:fadeUp 0.6s ease forwards 0.1s}
-    .page-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
-
-    .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;line-height:1;color:var(--white);position:relative;z-index:1;opacity:0;animation:fadeUp 0.7s ease forwards 0.25s}
-    .page-title em{font-style:italic;color:var(--gold-light)}
-    .page-title .outline{-webkit-text-stroke:1px rgba(240,242,245,0.25);color:transparent}
-
-    .page-subtitle{font-size:0.95rem;color:var(--muted);margin-top:1rem;max-width:500px;line-height:1.7;position:relative;z-index:1;opacity:0;animation:fadeUp 0.7s ease forwards 0.38s}
-
-    /* CONTENT */
-    .about-wrap{padding:6rem 3rem;display:grid;grid-template-columns:320px 1fr;gap:6rem;align-items:start;position:relative;z-index:1}
-
-    /* Left card */
-    .about-card{
-      position:sticky;top:7rem;
-      border:1px solid var(--border);
-      background:var(--bg-card);
-      overflow:hidden;
+    .photo-frame{
+      position:relative;
+      width:320px;height:380px;
     }
 
-    .card-header{
-      padding:2rem 2rem 1.5rem;
-      border-bottom:1px solid var(--border);
-      position:relative;overflow:hidden;
+    .photo-frame img{
+      width:100%;height:100%;object-fit:cover;object-position:center top;
+      display:block;filter:grayscale(10%) contrast(1.03);
+      transition:filter 0.4s ease;
     }
 
-    .card-header::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:2px;
-      background:linear-gradient(to right,var(--gold),var(--gold-light),transparent);
+    .photo-frame:hover img{filter:grayscale(0%)}
+
+    .photo-frame::before{
+      content:'';position:absolute;top:-8px;left:-8px;
+      width:50px;height:50px;
+      border-top:2px solid var(--gold);border-left:2px solid var(--gold);
+      z-index:2;
+    }
+    .photo-frame::after{
+      content:'';position:absolute;bottom:-8px;right:-8px;
+      width:50px;height:50px;
+      border-bottom:2px solid var(--gold);border-right:2px solid var(--gold);
+      z-index:2;
     }
 
-    .card-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;color:var(--white);line-height:1.15}
-    .card-name em{font-style:italic;color:var(--gold)}
-    .card-title{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--silver-dim);margin-top:0.4rem}
+    .photo-gradient{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,transparent 60%,rgba(22,24,29,0.6) 100%);
+      z-index:1;
+    }
 
-    .card-body{padding:1.5rem 2rem}
-    .card-row{display:flex;gap:1rem;align-items:baseline;padding:0.7rem 0;border-bottom:1px solid var(--border)}
-    .card-row:last-child{border-bottom:none}
-    .card-key{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);min-width:72px}
-    .card-val{font-size:0.84rem;color:rgba(221,226,232,0.75)}
-    .card-val a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s,color 0.2s}
-    .card-val a:hover{color:var(--gold-light);border-color:var(--gold-light)}
-
-    .status-badge{display:inline-flex;align-items:center;gap:0.4rem;color:var(--green)}
-    .status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s ease-in-out infinite}
+    /* Quick facts strip */
+    .quick-facts{display:flex;flex-direction:column;gap:0;width:320px}
+    .qf-row{display:flex;align-items:center;gap:1rem;padding:0.7rem 0;border-bottom:1px solid var(--border)}
+    .qf-row:first-child{border-top:1px solid var(--border)}
+    .qf-key{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);min-width:80px}
+    .qf-val{font-size:0.84rem;color:rgba(221,226,232,0.75)}
+    .qf-val a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s,color 0.2s}
+    .qf-val a:hover{color:var(--gold-light);border-color:var(--gold-light)}
+    .status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);display:inline-block;margin-right:5px;animation:pulse 2s ease-in-out infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
 
-    .card-cta{display:block;padding:1.2rem 2rem;background:var(--gold);color:var(--bg);font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;text-align:center;transition:background 0.2s}
-    .card-cta:hover{background:var(--gold-light)}
+    /* Hero text side */
+    .hero-text-col{position:relative;z-index:1;opacity:0;animation:fadeUp 0.8s ease forwards 0.35s}
 
-    /* Right content */
-    .about-right{}
+    .page-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;font-family:'Courier Prime',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
+    .page-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
 
-    .section-label{display:flex;align-items:center;gap:1rem;font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem}
+    .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5vw,4.8rem);font-weight:300;line-height:1.05;color:var(--white);margin-bottom:1.2rem}
+    .page-title em{font-style:italic;color:var(--gold-light)}
+
+    .hero-intro{font-size:1rem;color:rgba(221,226,232,0.7);line-height:1.85;margin-bottom:2rem}
+
+    .hero-cta{display:inline-flex;align-items:center;gap:0.6rem;padding:0.8rem 1.8rem;background:var(--gold);color:var(--bg);font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:background 0.2s,transform 0.2s}
+    .hero-cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+
+    /* ── BODY SECTIONS ── */
+    .page-body{position:relative;z-index:1}
+
+    .section-label{display:flex;align-items:center;gap:1rem;font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2.5rem}
     .section-label::after{content:'';flex:1;height:1px;background:var(--border-gold)}
 
-    .about-block{margin-bottom:4rem}
+    /* ── PHILOSOPHY SECTION ── */
+    .philosophy{padding:6rem 3rem;border-top:1px solid var(--border)}
 
-    .about-heading{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;color:var(--white);margin-bottom:1.2rem}
-    .about-heading em{font-style:italic;color:var(--gold-light)}
+    .philosophy-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 
-    .about-text{font-size:0.95rem;color:rgba(221,226,232,0.72);line-height:1.85;margin-bottom:1rem}
-    .about-text:last-child{margin-bottom:0}
+    .phil-card{
+      padding:2.5rem;border:1px solid var(--border);background:var(--bg-card);
+      position:relative;overflow:hidden;
+      transition:border-color 0.25s,transform 0.25s;
+    }
+    .phil-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);opacity:0;transition:opacity 0.25s}
+    .phil-card:hover{border-color:var(--border-gold);transform:translateY(-4px)}
+    .phil-card:hover::before{opacity:1}
 
-    /* Skills */
-    .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.4rem}
-    .skill-item{
-      display:flex;align-items:center;gap:0.7rem;
-      padding:0.7rem 1rem;
+    .phil-num{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.16em;color:var(--gold);margin-bottom:1rem}
+    .phil-q{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--silver-dim);margin-bottom:1.2rem;line-height:1.5}
+    .phil-a{font-size:0.9rem;color:rgba(221,226,232,0.72);line-height:1.8}
+
+    /* ── WORKING WITH ME ── */
+    .working{padding:6rem 3rem;border-top:1px solid var(--border);background:var(--bg-mid)}
+
+    .working-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+
+    .work-card{
+      padding:2rem;border:1px solid var(--border);
+      display:flex;flex-direction:column;gap:1rem;
+      transition:border-color 0.25s,background 0.25s;
+      position:relative;overflow:hidden;
+    }
+    .work-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gold-light));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease}
+    .work-card:hover{border-color:var(--border-gold);background:var(--bg-hover)}
+    .work-card:hover::after{transform:scaleX(1)}
+
+    .work-icon{width:40px;height:40px;border:1px solid var(--border-gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .work-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5}
+    .work-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--white)}
+    .work-text{font-size:0.86rem;color:rgba(221,226,232,0.65);line-height:1.75}
+
+    /* ── HUMAN SIDE ── */
+    .human{padding:6rem 3rem;border-top:1px solid var(--border)}
+
+    .human-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start}
+
+    .human-left{}
+    .human-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:1.5rem}
+    .human-heading em{font-style:italic;color:var(--gold-light)}
+    .human-text{font-size:0.95rem;color:rgba(221,226,232,0.7);line-height:1.85;margin-bottom:1rem}
+
+    /* Interest tags */
+    .interest-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+    .interest-tag{
+      display:flex;align-items:center;gap:0.5rem;
+      padding:0.45rem 1rem;
       border:1px solid var(--border);
-      font-size:0.82rem;color:var(--silver-dim);
-      transition:border-color 0.25s,color 0.25s,background 0.25s,transform 0.2s;
+      font-size:0.78rem;color:var(--silver-dim);
+      transition:border-color 0.2s,color 0.2s,background 0.2s;
       cursor:default;
     }
+    .interest-tag:hover{border-color:var(--border-gold);color:var(--gold);background:rgba(200,164,90,0.05)}
+    .interest-tag svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
+
+    /* Driving section */
+    .human-right{}
+
+    .driving-card{
+      padding:2.5rem;border:1px solid var(--border-gold);background:var(--bg-card);
+      position:relative;overflow:hidden;
+    }
+    .driving-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--gold),var(--gold-light))}
+
+    .driving-label{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem}
+    .driving-label::before{content:'▸';font-size:0.55rem}
+
+    .driving-quote{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--white);line-height:1.45;margin-bottom:1.5rem}
+
+    .driving-text{font-size:0.9rem;color:rgba(221,226,232,0.68);line-height:1.8}
+
+    /* Goal list */
+    .goal-list{list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-top:1.5rem}
+    .goal-list li{display:flex;align-items:flex-start;gap:0.8rem;font-size:0.86rem;color:rgba(221,226,232,0.65);line-height:1.6}
+    .goal-list li::before{content:'→';color:var(--gold);font-size:0.75rem;margin-top:0.15rem;flex-shrink:0}
+
+    /* ── COMPETENCIES ── */
+    .competencies{padding:6rem 3rem;border-top:1px solid var(--border);background:var(--bg-mid)}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.4rem}
+    .skill-item{display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1rem;border:1px solid var(--border);font-size:0.82rem;color:var(--silver-dim);transition:border-color 0.25s,color 0.25s,background 0.25s,transform 0.2s;cursor:default}
     .skill-item:hover{border-color:var(--border-gold);color:var(--cream);background:var(--bg-card);transform:translateX(4px)}
     .skill-item::before{content:'';display:block;width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;transition:box-shadow 0.2s}
     .skill-item:hover::before{box-shadow:0 0 8px var(--gold)}
 
-    /* Timeline */
-    .timeline{display:flex;flex-direction:column;gap:0;position:relative}
-    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent)}
-
-    .tl-item{padding:0 0 2.5rem 2.2rem;position:relative}
-    .tl-item:last-child{padding-bottom:0}
-
-    .tl-dot{
-      position:absolute;left:-5px;top:0.3rem;
-      width:11px;height:11px;border-radius:50%;
-      background:var(--bg);border:1px solid var(--gold);
-      transition:background 0.2s,box-shadow 0.2s;
-    }
-    .tl-item:hover .tl-dot{background:var(--gold);box-shadow:0 0 10px var(--gold)}
-
-    .tl-period{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.3rem}
-    .tl-role{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--white)}
-    .tl-company{font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--silver-dim);margin-bottom:0.7rem}
-    .tl-desc{font-size:0.85rem;color:rgba(221,226,232,0.6);line-height:1.65}
-
-    /* Languages */
-    .lang-grid{display:flex;gap:1rem;flex-wrap:wrap}
-    .lang-card{
-      padding:1.2rem 1.8rem;border:1px solid var(--border);
-      text-align:center;transition:border-color 0.2s,background 0.2s,transform 0.2s;
-    }
-    .lang-card:hover{border-color:var(--border-gold);background:var(--bg-card);transform:translateY(-3px)}
-    .lang-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--white);display:block}
-    .lang-level{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);display:block;margin-top:0.2rem}
-
-    footer{position:relative;z-index:1;padding:1.8rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;margin-top:0}
+    footer{position:relative;z-index:1;padding:1.8rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
     .footer-copy{font-family:'Courier Prime',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.06em}
     .footer-links{display:flex;gap:1.5rem}
     .footer-links a{font-family:'Courier Prime',monospace;font-size:0.65rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
     .footer-links a:hover{color:var(--gold)}
 
-    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-    /* Reveal on scroll */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
 
-    @media(max-width:900px){
-      .about-wrap{grid-template-columns:1fr;gap:3rem;padding:4rem 1.4rem}
-      .about-card{position:static}
+    @media(max-width:960px){
+      .page-hero{grid-template-columns:1fr;gap:3rem;min-height:auto;padding:8rem 1.4rem 4rem}
+      .hero-photo-col{flex-direction:row;align-items:flex-start;gap:2rem}
+      .photo-frame{width:140px;height:175px;flex-shrink:0}
+      .quick-facts{width:100%}
+      .philosophy-grid,.working-grid{grid-template-columns:1fr}
+      .human-layout{grid-template-columns:1fr;gap:3rem}
+      .philosophy,.working,.human,.competencies{padding:4rem 1.4rem}
       nav{padding:1rem 1.4rem}
       .nav-links a{padding:0.4rem 0.55rem;font-size:0.65rem}
-      .page-hero{padding:8rem 1.4rem 3rem}
       footer{padding:1.5rem 1.4rem;flex-direction:column;gap:0.8rem;text-align:center}
-      .skills-grid{grid-template-columns:1fr}
     }
-    @media(max-width:520px){.nav-links{display:none}.cursor-dot,.cursor-ring{display:none}body{cursor:auto}}
+    @media(max-width:520px){
+      .nav-links{display:none}
+      .cursor-dot,.cursor-ring{display:none}
+      body{cursor:auto}
+      .hero-photo-col{flex-direction:column;align-items:center}
+      .photo-frame{width:200px;height:250px}
+    }
   </style>
 </head>
 <body>
@@ -200,120 +251,197 @@
   </ul>
 </nav>
 
+<!-- HERO — Photo left, text right -->
 <div class="page-hero">
   <div class="hero-orb orb-a"></div>
   <div class="hero-orb orb-b"></div>
   <div class="hero-grid"></div>
-  <div class="hero-bg-text" aria-hidden="true">About</div>
-  <div class="page-eyebrow">01 &nbsp;·&nbsp; About</div>
-  <h1 class="page-title">The Person<br>Behind the <em>Work</em><span class="outline">.</span></h1>
-  <p class="page-subtitle">Operations professional, systems thinker, and institutional project coordinator based in Lusaka, Zambia.</p>
+
+  <div class="hero-photo-col">
+    <div class="photo-frame">
+      <img src="profile.jpg" alt="Chileleko Lombe Moonga"/>
+      <div class="photo-gradient"></div>
+    </div>
+    <div class="quick-facts">
+      <div class="qf-row">
+        <span class="qf-key">Status</span>
+        <span class="qf-val"><span class="status-dot"></span>Open to opportunities</span>
+      </div>
+      <div class="qf-row">
+        <span class="qf-key">Remote</span>
+        <span class="qf-val" style="color:var(--green);">Available globally ✓</span>
+      </div>
+      <div class="qf-row">
+        <span class="qf-key">Email</span>
+        <span class="qf-val"><a href="mailto:ChilelekoLM@Outlook.com">ChilelekoLM@Outlook.com</a></span>
+      </div>
+      <div class="qf-row">
+        <span class="qf-key" style="display:flex;align-items:center;gap:0.35rem;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          WhatsApp
+        </span>
+        <span class="qf-val"><a href="https://wa.me/18035409160" target="_blank" rel="noopener noreferrer">+1 803 540 9160</a></span>
+      </div>
+      <div class="qf-row">
+        <span class="qf-key">Education</span>
+        <span class="qf-val">BBA Cum Laude · UoPeople</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-text-col">
+    <div class="page-eyebrow">01 &nbsp;·&nbsp; About</div>
+    <h1 class="page-title">The mind<br>behind the <em>systems.</em></h1>
+    <p class="hero-intro">I'm a Business Operations &amp; Revenue Coordinator with 4+ years of experience turning complex, messy operations into clean, scalable systems. I've delivered digital platforms for central banks, capital markets regulators, and investment holding companies — and I bring that same institutional rigour to every engagement, wherever in the world it is.</p>
+    <a href="contact.html" class="hero-cta">Work With Me →</a>
+  </div>
 </div>
 
-<div class="about-wrap">
-  <div class="about-card reveal">
-    <div class="card-header">
-      <div class="card-name">Chileleko<br><em>Lombe</em> Moonga</div>
-      <div class="card-title">Business &amp; Revenue Operations</div>
-    </div>
-    <div class="card-body">
-      <div class="card-row"><span class="card-key">Location</span><span class="card-val">Lusaka, Zambia</span></div>
-      <div class="card-row"><span class="card-key">Email</span><span class="card-val"><a href="mailto:ChilelekoLM@Outlook.com">ChilelekoLM@Outlook.com</a></span></div>
-      <div class="card-row"><span class="card-key">Phone</span><span class="card-val"><a href="tel:+260779595783">+260 779 595 783</a></span></div>
-      <div class="card-row"><span class="card-key">Status</span><span class="card-val"><span class="status-badge"><span class="status-dot"></span>Available</span></span></div>
-      <div class="card-row"><span class="card-key">Remote</span><span class="card-val">Available globally</span></div>
-      <div class="card-row"><span class="card-key">Education</span><span class="card-val">BBA Cum Laude · UoPeople</span></div>
-    </div>
-    <a href="contact.html" class="card-cta">Get in Touch →</a>
-  </div>
+<div class="page-body">
 
-  <div class="about-right">
-    <div class="about-block reveal">
-      <div class="section-label">Background</div>
-      <p class="about-text">I'm a Business Operations &amp; Revenue Coordinator at ProWeb Limited, where I lead group-level operations across multiple business units. My work sits at the intersection of process design, CRM optimisation, and cross-functional project delivery — building systems that make complex organisations run cleanly.</p>
-      <p class="about-text">Over 4+ years I've grown from operations associate to coordinator, taking on progressively wider scope across revenue operations, vendor management, QA, and executive reporting. I've had the privilege of working on digital platforms for Zambia's most prominent institutions — the central bank, capital markets regulators, and investment holding companies.</p>
-      <p class="about-text">I hold a BBA (Cum Laude, 3.54 GPA, Dean's List every semester) from the University of the People — WSCUC accredited — and carry dual HubSpot certifications in Revenue Operations and Sales Hub Software.</p>
-    </div>
+  <!-- PHILOSOPHY -->
+  <section class="philosophy">
+    <div class="section-label reveal">How I Think</div>
+    <div class="philosophy-grid">
 
-    <div class="about-block reveal">
-      <div class="section-label">Core Competencies</div>
-      <div class="skills-grid">
-        <div class="skill-item">Business &amp; Revenue Operations</div>
-        <div class="skill-item">CRM Administration (HubSpot)</div>
-        <div class="skill-item">Cross-functional Coordination</div>
-        <div class="skill-item">Process Improvement &amp; SOPs</div>
-        <div class="skill-item">KPI Dashboards &amp; Reporting</div>
-        <div class="skill-item">Workflow Automation Design</div>
-        <div class="skill-item">QA Testing &amp; UAT</div>
-        <div class="skill-item">Vendor &amp; Supplier Management</div>
-        <div class="skill-item">Sales &amp; Marketing Pipeline</div>
-        <div class="skill-item">Budget &amp; Cost Management</div>
-        <div class="skill-item">Stakeholder Communication</div>
-        <div class="skill-item">Performance Reporting</div>
-        <div class="skill-item">Project Initiation &amp; Scoping</div>
-        <div class="skill-item">Project Planning &amp; Scheduling</div>
-        <div class="skill-item">Risk Management</div>
-        <div class="skill-item">Stakeholder Management &amp; RACI</div>
-        <div class="skill-item">Quality Management</div>
-        <div class="skill-item">Budgeting &amp; Resource Planning</div>
-        <div class="skill-item">Product Quality Assurance</div>
+      <div class="phil-card reveal">
+        <div class="phil-num">01 / Philosophy</div>
+        <div class="phil-q">"How do you approach operations?"</div>
+        <div class="phil-a">I see operations as the bridge between strategy and execution. When something isn't working, my first instinct is to understand the system behind it — not treat the symptom. I break complex problems into components, find the bottleneck, and design processes that are simple, scalable, and easy for people to follow. The best operations work often goes unnoticed because everything just runs.</div>
+      </div>
+
+      <div class="phil-card reveal">
+        <div class="phil-num">02 / Belief</div>
+        <div class="phil-q">"What do you believe that most people wouldn't expect?"</div>
+        <div class="phil-a">People are usually the solution, not the problem. When a process breaks down, it's easy to blame individuals — but more often there's a gap in communication, clarity, or system design. I've found that improving the process almost always improves performance without needing to push harder on people.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WORKING WITH ME -->
+  <section class="working">
+    <div class="section-label reveal">Working With Me</div>
+    <div class="working-grid">
+
+      <div class="work-card reveal">
+        <div class="work-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="work-title">How I Communicate</div>
+        <div class="work-text">I prefer clear and structured communication. For day-to-day work, I lean async — it gives people flexibility and creates a documented trail of decisions. When something needs quick alignment, I prefer a direct conversation to remove ambiguity and keep momentum. My goal is always to communicate early, clearly, and with context.</div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="work-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="work-title">My Hidden Superpower</div>
+        <div class="work-text">Connecting dots across teams. I naturally look for dependencies, risks, and improvement opportunities before they become problems. Whether I'm coordinating a project, managing a CRM process, or supporting operational initiatives — I enjoy bringing clarity to situations where multiple people, priorities, and moving parts are involved.</div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="work-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="work-title">My Approach to Delivery</div>
+        <div class="work-text">I don't just execute tasks — I think about the system around them. Before starting anything, I ask: what's the goal, what could go wrong, who needs to know, and how do we measure it? That habit of thinking upstream saves a lot of firefighting downstream.</div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="work-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="work-title">What Teams Say About Me</div>
+        <div class="work-text">I show up prepared, follow through consistently, and make the people around me feel like things are under control — even when they aren't yet. I take ownership without waiting to be asked, and I'd rather flag a problem early than let it quietly become everyone's problem.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HUMAN SIDE -->
+  <section class="human">
+    <div class="human-layout">
+      <div class="human-left">
+        <div class="section-label reveal">Beyond the Job Title</div>
+        <h2 class="human-heading reveal">A person who happens to<br>be <em>great at operations.</em></h2>
+        <p class="human-text reveal">Outside of work I'm genuinely curious — about business, technology, how things are built, and why some organisations thrive while others stall. I'm constantly learning, whether that's through courses, reading, or just pulling apart how a product or system works.</p>
+        <p class="human-text reveal">I enjoy building personal projects, exploring automation and systems thinking, and following the startup world and emerging tech. When I'm not doing any of that, I'm with family and friends or watching football with the kind of focus I probably should reserve for spreadsheets.</p>
+        <p class="human-text reveal">I speak English fluently — so time zones are our only barrier.</p>
+        <div class="interest-tags reveal">
+          <span class="interest-tag">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Startups &amp; Tech
+          </span>
+          <span class="interest-tag">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Automation
+          </span>
+          <span class="interest-tag">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Systems Thinking
+          </span>
+          <span class="interest-tag">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Continuous Learning
+          </span>
+          <span class="interest-tag">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Football ⚽
+          </span>
+          <span class="interest-tag">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Family First
+          </span>
+        </div>
+      </div>
+
+      <div class="human-right reveal">
+        <div class="driving-card">
+          <div class="driving-label">What's Driving Me Right Now</div>
+          <div class="driving-quote">"I want to be the person in the room who makes complex things simple — and makes simple things run on their own."</div>
+          <div class="driving-text">I'm focused on becoming the kind of operations professional who helps organisations scale efficiently. I'm intentionally building deeper expertise in Revenue Operations, Sales Operations, process improvement, and cross-functional leadership.</div>
+          <ul class="goal-list">
+            <li>Take on increasingly strategic operational roles globally</li>
+            <li>Help teams work smarter and make better decisions</li>
+            <li>Build systems that create lasting business impact</li>
+            <li>Keep closing the gap between where I am and where I'm going</li>
+          </ul>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="about-block reveal">
-      <div class="section-label">Career Journey</div>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-period">Jan 2026 – Present</div>
-          <div class="tl-role">Business Operations &amp; Revenue Coordinator</div>
-          <div class="tl-company">ProWeb Limited · Lusaka</div>
-          <div class="tl-desc">Leading group-level operations across all business units. Cross-functional project delivery, executive dashboards, CRM pipeline management.</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-period">Sep 2024 – Jan 2026</div>
-          <div class="tl-role">Revenue Operations Executive</div>
-          <div class="tl-company">ProWeb Limited · Lusaka</div>
-          <div class="tl-desc">HubSpot CRM administration, multi-unit performance dashboards, QA testing for digital platforms.</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-period">Feb 2024 – Aug 2024</div>
-          <div class="tl-role">Operations Supervisor</div>
-          <div class="tl-company">Wibrema Investments LTD · Lusaka</div>
-          <div class="tl-desc">100% deadline adherence, 95% inquiry resolution rate, SOP development across all operational shifts.</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-period">Mar 2023 – Feb 2024</div>
-          <div class="tl-role">Assistant Operations Supervisor</div>
-          <div class="tl-company">Wibrema Investments LTD · Lusaka</div>
-          <div class="tl-desc">Cross-team coordination, performance monitoring, stakeholder reporting.</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-period">Jan 2022 – Feb 2023</div>
-          <div class="tl-role">Operations Associate</div>
-          <div class="tl-company">AkzoNobel Group (Dulux) · Lusaka</div>
-          <div class="tl-desc">Retail &amp; manufacturing operations, inventory management, workflow coordination.</div>
-        </div>
-      </div>
+  <!-- COMPETENCIES -->
+  <section class="competencies">
+    <div class="section-label reveal">Core Competencies</div>
+    <div class="skills-grid">
+      <div class="skill-item">Business &amp; Revenue Operations</div>
+      <div class="skill-item">CRM Administration (HubSpot)</div>
+      <div class="skill-item">Cross-functional Coordination</div>
+      <div class="skill-item">Process Improvement &amp; SOPs</div>
+      <div class="skill-item">KPI Dashboards &amp; Reporting</div>
+      <div class="skill-item">Workflow Automation Design</div>
+      <div class="skill-item">QA Testing &amp; UAT</div>
+      <div class="skill-item">Vendor &amp; Supplier Management</div>
+      <div class="skill-item">Sales &amp; Marketing Pipeline</div>
+      <div class="skill-item">Budget &amp; Cost Management</div>
+      <div class="skill-item">Stakeholder Communication</div>
+      <div class="skill-item">Performance Reporting</div>
+      <div class="skill-item">Project Initiation &amp; Scoping</div>
+      <div class="skill-item">Project Planning &amp; Scheduling</div>
+      <div class="skill-item">Risk Management</div>
+      <div class="skill-item">Stakeholder Management &amp; RACI</div>
+      <div class="skill-item">Quality Management</div>
+      <div class="skill-item">Budgeting &amp; Resource Planning</div>
+      <div class="skill-item">Product Quality Assurance</div>
     </div>
+  </section>
 
-    <div class="about-block reveal">
-      <div class="section-label">Languages</div>
-      <div class="lang-grid">
-        <div class="lang-card"><span class="lang-name">English</span><span class="lang-level">Fluent</span></div>
-        <div class="lang-card"><span class="lang-name">Bemba</span><span class="lang-level">Native</span></div>
-        <div class="lang-card"><span class="lang-name">Nyanja</span><span class="lang-level">Proficient</span></div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <footer>
-  <span class="footer-copy">© 2026 Chileleko Lombe Moonga · Lusaka, Zambia</span>
+  <span class="footer-copy">© 2026 Chileleko Lombe Moonga</span>
   <div class="footer-links">
     <a href="projects.html">Projects</a>
     <a href="resume.html">Resume</a>
@@ -326,11 +454,11 @@
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
   (function anim(){dot.style.left=mx+'px';dot.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
-  document.querySelectorAll('a,button,.skill-item,.lang-card,.tl-item').forEach(el=>{
+  document.querySelectorAll('a,button,.skill-item,.work-card,.phil-card,.interest-tag').forEach(el=>{
     el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
     el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
   });
-  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.1});
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.08});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 </body>

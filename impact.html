@@ -1,3 +1,6 @@
+
+raw
+Impact · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +27,7 @@
     .nav-links{display:flex;gap:0;list-style:none}
     .nav-links a{display:block;padding:0.4rem 0.9rem;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--silver-dim);text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s}
     .nav-links a:hover,.nav-links a.active{color:var(--gold);border-color:var(--gold)}
-
+ 
     .page-hero{min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;padding:9rem 3rem 4rem;position:relative;overflow:hidden}
     .hero-bg-text{position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(7rem,16vw,16rem);font-weight:300;font-style:italic;color:transparent;-webkit-text-stroke:1px rgba(200,164,90,0.06);pointer-events:none;user-select:none;line-height:1}
     .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,180,192,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(168,180,192,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
@@ -35,11 +38,11 @@
     .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;line-height:1;color:var(--white);position:relative;z-index:1;opacity:0;animation:fadeUp 0.7s ease forwards 0.25s}
     .page-title em{font-style:italic;color:var(--gold-light)}
     .page-subtitle{font-size:0.95rem;color:var(--muted);margin-top:1rem;max-width:500px;line-height:1.7;position:relative;z-index:1;opacity:0;animation:fadeUp 0.7s ease forwards 0.38s}
-
+ 
     .impact-body{padding:5rem 3rem;position:relative;z-index:1}
     .section-label{display:flex;align-items:center;gap:1rem;font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2.5rem}
     .section-label::after{content:'';flex:1;height:1px;background:var(--border-gold)}
-
+ 
     /* Animated number cards */
     .numbers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:5rem}
     .number-card{background:var(--bg-card);padding:2.2rem 1.8rem;transition:background 0.25s;position:relative;overflow:hidden;cursor:default}
@@ -51,7 +54,7 @@
     .number-card:hover .num-val{color:var(--white)}
     .num-label{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
     .num-desc{font-size:0.8rem;color:rgba(221,226,232,0.45);line-height:1.5}
-
+ 
     /* Skill bars */
     .skills-wrap{margin-bottom:5rem}
     .skill-bars{display:flex;flex-direction:column;gap:1.6rem}
@@ -62,7 +65,7 @@
     .skill-track{height:3px;background:var(--border);position:relative;overflow:hidden;border-radius:2px}
     .skill-fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(to right,var(--silver-dim),var(--gold));width:0;transition:width 1.4s cubic-bezier(0.4,0,0.2,1);border-radius:2px}
     .skill-fill.animate{width:var(--w)}
-
+ 
     /* Tools */
     .tools-wrap{margin-bottom:5rem}
     .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1rem}
@@ -71,7 +74,7 @@
     .tool-cat{font-family:'Courier Prime',monospace;font-size:0.55rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
     .tool-name{font-size:0.88rem;color:var(--cream);font-weight:400}
     .tool-desc{font-size:0.72rem;color:var(--muted);margin-top:0.25rem;line-height:1.4}
-
+ 
     /* Approach */
     .approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
     .approach-card{padding:2rem;border:1px solid var(--border);background:var(--bg-card);position:relative;overflow:hidden;transition:border-color 0.25s,transform 0.25s}
@@ -81,7 +84,7 @@
     .approach-num{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;color:var(--gold);margin-bottom:0.8rem}
     .approach-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--white);margin-bottom:0.6rem}
     .approach-text{font-size:0.85rem;color:rgba(221,226,232,0.62);line-height:1.75}
-
+ 
     .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
     footer{position:relative;z-index:1;padding:1.8rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
@@ -108,7 +111,7 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
-
+ 
 <div class="page-hero">
   <div class="hero-orb"></div>
   <div class="hero-grid"></div>
@@ -117,7 +120,7 @@
   <h1 class="page-title">Measurable<br><em>Impact</em></h1>
   <p class="page-subtitle">Results, skills, and tools that define my operational track record across 4+ years of progressive responsibility.</p>
 </div>
-
+ 
 <div class="impact-body">
   <div class="section-label">Key Metrics</div>
   <div class="numbers-grid reveal">
@@ -127,10 +130,9 @@
     <div class="number-card"><div class="num-val">6</div><div class="num-label">Institutional Projects</div><div class="num-desc">Finance, regulation, mining, and commerce sectors.</div></div>
     <div class="number-card"><div class="num-val">2<span>×</span></div><div class="num-label">HubSpot Certified</div><div class="num-desc">Revenue Operations and Sales Hub Software.</div></div>
     <div class="number-card"><div class="num-val">3.54</div><div class="num-label">GPA — Cum Laude</div><div class="num-desc">Dean's List every semester at UoPeople.</div></div>
-    <div class="number-card"><div class="num-val">3</div><div class="num-label">Languages</div><div class="num-desc">English · Bemba · Nyanja.</div></div>
     <div class="number-card"><div class="num-val">12<span>+</span></div><div class="num-label">Tools Mastered</div><div class="num-desc">CRM, reporting, PM, and comms platforms.</div></div>
   </div>
-
+ 
   <div class="skills-wrap">
     <div class="section-label">Skill Proficiency</div>
     <div class="skill-bars reveal">
@@ -149,7 +151,7 @@
       <div class="skill-row"><div class="skill-head"><span class="skill-name">Budgeting &amp; Resource Planning</span><span class="skill-level">Proficient</span></div><div class="skill-track"><div class="skill-fill" style="--w:78%"></div></div></div>
     </div>
   </div>
-
+ 
   <div class="tools-wrap">
     <div class="section-label">Tools &amp; Stack</div>
     <div class="tools-grid reveal">
@@ -172,7 +174,7 @@
         <div class="tool-card"><div class="tool-cat" style="display:flex;align-items:center;gap:0.35rem;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>Methodology</div><div class="tool-name">Agile &amp; Scrum</div><div class="tool-desc">Iterative project delivery</div></div>
     </div>
   </div>
-
+ 
   <div class="section-label">How I Work</div>
   <div class="approach-grid reveal">
     <div class="approach-card"><div class="approach-num">01</div><div class="approach-title">Systems First</div><div class="approach-text">I build scalable processes before optimising for speed. A well-designed SOP handles 90% of cases automatically, freeing attention for exceptions that truly need it.</div></div>
@@ -181,7 +183,7 @@
     <div class="approach-card"><div class="approach-num">04</div><div class="approach-title">Institutional Rigour</div><div class="approach-text">Working across Zambia's regulatory and financial institutions taught me the value of precision, compliance alignment, and structured reporting — I bring that to every engagement.</div></div>
   </div>
 </div>
-
+ 
 <footer>
   <span class="footer-copy">© 2026 Chileleko Lombe Moonga</span>
   <div class="footer-links"><a href="projects.html">Projects</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a></div>

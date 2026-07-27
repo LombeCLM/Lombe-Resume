@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Operations Dashboard — Chileleko Lombe Moonga</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Courier+Prime&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#1a1612;--bg-mid:#211d18;--bg-card:#272219;--bg-hover:#2e2820;
+      --surface:#302b22;--gold:#d4a853;--gold-light:#e8c278;--amber:#e07d2a;
+      --cream:#e8e0d4;--white:#f5efe6;--muted:#7a6e5f;--silver:#b8a898;
+      --border:rgba(212,168,83,0.15);--border-soft:rgba(212,168,83,0.08);
+      --text:#e8e0d4;--text-dim:#9a8e7e;--text-bright:#f5efe6;
+      --green:#4db885;--red:#e05a5a;--blue:#5a8ae0;--purple:#a05ae0;--orange:#e07d2a;
+      --shadow:0 4px 24px rgba(0,0,0,0.4);
+    }
+    .light{
+      --bg:#f5f2ee;--bg-mid:#edeae4;--bg-card:#ffffff;--bg-hover:#f0ece6;
+      --surface:#e8e4de;--gold:#b8882a;--gold-light:#9a7020;--amber:#c06820;
+      --cream:#2a2520;--white:#1a1612;--muted:#8a7e6e;--silver:#6a5e4e;
+      --border:rgba(150,110,50,0.25);--border-soft:rgba(150,110,50,0.1);
+      --text:#2a2520;--text-dim:#6a5e4e;--text-bright:#1a1612;
+      --shadow:0 4px 24px rgba(0,0,0,0.1);
+    }
+    html,body{min-height:100vh}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:14px;transition:background 0.3s,color 0.3s}
+
+```
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0.8rem 1.8rem;background:var(--bg-mid);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.topbar-left{display:flex;align-items:center;gap:1.2rem}
+.back-link{display:flex;align-items:center;gap:0.4rem;font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.back-link:hover{color:var(--gold)}
+.topbar-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--text-bright)}
+.topbar-title em{font-style:italic;color:var(--gold)}
+.topbar-right{display:flex;align-items:center;gap:0.8rem}
+.theme-toggle{display:flex;align-items:center;gap:0.5rem;padding:0.4rem 0.9rem;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s}
+.theme-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.demo-badge{padding:0.3rem 0.7rem;background:rgba(212,168,83,0.1);border:1px solid var(--border);font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
+
+/* TABS */
+.tabs{display:flex;gap:0;padding:0 1.8rem;background:var(--bg-mid);border-bottom:1px solid var(--border)}
+.tab{padding:0.8rem 1.4rem;font-family:'Courier Prime',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;display:flex;align-items:center;gap:0.5rem}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--gold);border-color:var(--gold)}
+.tab svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+/* SUMMARY CARDS */
+.summary{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--border-soft);border-bottom:1px solid var(--border)}
+.summary-card{background:var(--bg-card);padding:1.2rem 1.5rem;transition:background 0.2s;cursor:default}
+.summary-card:hover{background:var(--bg-hover)}
+.summary-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:400;line-height:1;margin-bottom:0.3rem}
+.summary-label{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)}
+
+/* FILTERS */
+.filters{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;padding:0.9rem 1.8rem;border-bottom:1px solid var(--border);background:var(--bg)}
+.filter-label{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-right:0.2rem}
+.filter-btn{padding:0.3rem 0.75rem;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.06em;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--gold);color:var(--gold)}
+.filter-btn.active{background:var(--gold);color:#1a1612;border-color:var(--gold)}
+.filter-sep{width:1px;height:18px;background:var(--border);margin:0 0.2rem;flex-shrink:0}
+.search-wrap{margin-left:auto;position:relative}
+.search-input{padding:0.35rem 0.8rem 0.35rem 2rem;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;width:200px;transition:border-color 0.2s}
+.search-input:focus{border-color:var(--gold)}
+.search-input::placeholder{color:var(--text-dim)}
+.search-icon{position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--text-dim)}
+.search-icon svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;padding-bottom:2rem}
+table{width:100%;border-collapse:collapse;min-width:900px}
+thead tr{background:var(--bg-mid);border-bottom:1px solid var(--border)}
+th{padding:0.7rem 1rem;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:color 0.2s}
+th:hover{color:var(--gold)}
+th.sorted{color:var(--gold)}
+.sort-icon{display:inline-block;margin-left:4px;opacity:0.5;font-size:0.55rem}
+th.sorted .sort-icon{opacity:1}
+td{padding:0.85rem 1rem;border-bottom:1px solid var(--border-soft);vertical-align:top;transition:background 0.15s}
+tbody tr:hover td{background:var(--bg-hover)}
+tbody tr:last-child td{border-bottom:none}
+.td-name{font-weight:500;color:var(--text-bright);font-size:0.88rem;line-height:1.4}
+.td-project{font-size:0.78rem;color:var(--text-dim)}
+.td-date{font-family:'Courier Prime',monospace;font-size:0.72rem;color:var(--text-dim);white-space:nowrap}
+.td-notes{font-size:0.78rem;color:var(--text-dim);max-width:220px;line-height:1.5}
+.td-notes strong{color:var(--text);font-weight:500}
+
+/* TAGS */
+.tag{display:inline-block;padding:0.2rem 0.6rem;font-size:0.68rem;border-radius:0}
+.tag-dept{background:var(--surface);color:var(--text-dim);border:1px solid var(--border-soft)}
+.tag-done{background:rgba(77,184,133,0.12);color:#4db885}
+.tag-progress{background:rgba(90,138,224,0.12);color:#5a8ae0}
+.tag-blocked{background:rgba(224,90,90,0.12);color:#e05a5a}
+.tag-review{background:rgba(160,90,224,0.12);color:#a05ae0}
+.tag-notstarted{background:rgba(122,110,95,0.15);color:#9a8e7e}
+.tag-high{background:rgba(224,90,90,0.1);color:#e05a5a}
+.tag-medium{background:rgba(224,125,42,0.1);color:#e07d2a}
+.tag-low{background:rgba(77,184,133,0.1);color:#4db885}
+.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.dot-done{background:#4db885}
+.dot-progress{background:#5a8ae0}
+.dot-blocked{background:#e05a5a}
+.dot-review{background:#a05ae0}
+.dot-ns{background:#9a8e7e}
+.owner-chip{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.75rem;color:var(--text-dim)}
+.owner-avatar{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.52rem;font-weight:600;color:#fff;flex-shrink:0}
+.overdue{color:#e05a5a!important}
+
+/* PIPELINE */
+.pipeline-wrap{padding:1.5rem 1.8rem}
+.pipeline-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-soft);border:1px solid var(--border);margin-bottom:1.5rem}
+.ps-card{background:var(--bg-card);padding:1rem 1.2rem}
+.ps-label{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem}
+.ps-val{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;color:var(--gold);line-height:1}
+.pipeline-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.8rem}
+.pipeline-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--text-bright)}
+.pipeline-title em{font-style:italic;color:var(--gold)}
+.pipeline-filters{display:flex;gap:0.5rem;flex-wrap:wrap}
+.pipeline-board{display:grid;grid-template-columns:repeat(5,1fr);gap:0.8rem;align-items:start}
+.pipeline-col-header{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0.8rem;background:var(--bg-mid);border:1px solid var(--border);margin-bottom:0.5rem}
+.pipeline-col-name{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)}
+.pipeline-col-count{font-family:'Courier Prime',monospace;font-size:0.58rem;color:var(--gold)}
+.deal-card{background:var(--bg-card);border:1px solid var(--border);padding:0.9rem;margin-bottom:0.5rem;transition:border-color 0.2s,transform 0.2s;cursor:default;position:relative;overflow:hidden}
+.deal-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);opacity:0;transition:opacity 0.2s}
+.deal-card:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.deal-card:hover::before{opacity:1}
+.deal-company{font-weight:500;font-size:0.85rem;color:var(--text-bright);margin-bottom:0.2rem}
+.deal-name{font-size:0.72rem;color:var(--text-dim);margin-bottom:0.5rem}
+.deal-value{font-family:'Courier Prime',monospace;font-size:0.78rem;color:var(--gold);margin-bottom:0.4rem}
+.deal-meta{display:flex;justify-content:space-between;align-items:center}
+.deal-owner{font-size:0.68rem;color:var(--text-dim)}
+.deal-prob{font-family:'Courier Prime',monospace;font-size:0.62rem;padding:0.12rem 0.35rem;background:var(--surface);color:var(--text-dim)}
+.deal-progress{height:2px;background:var(--border);margin-top:0.5rem}
+.deal-progress-fill{height:100%;background:linear-gradient(to right,var(--amber),var(--gold));transition:width 0.8s ease}
+.no-deals{padding:1rem;text-align:center;color:var(--text-dim);font-size:0.75rem;border:1px dashed var(--border)}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--text-dim)}
+.empty-state svg{width:40px;height:40px;stroke:currentColor;fill:none;stroke-width:1;margin-bottom:1rem;opacity:0.4;display:block;margin-left:auto;margin-right:auto}
+.empty-label{font-family:'Courier Prime',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase}
+
+/* FOOTER */
+.dash-footer{padding:1rem 1.8rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg-mid);flex-wrap:wrap;gap:0.5rem}
+.dash-footer-left{font-family:'Courier Prime',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.06em}
+.dash-footer-right{display:flex;align-items:center;gap:1rem}
+.dash-footer-right a{font-family:'Courier Prime',monospace;font-size:0.6rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.dash-footer-right a:hover{color:var(--gold)}
+
+@media(max-width:900px){
+  .pipeline-board{grid-template-columns:1fr 1fr}
+  .pipeline-summary{grid-template-columns:1fr 1fr}
+  .summary{grid-template-columns:repeat(3,1fr)}
+  .topbar,.tabs,.filters,.pipeline-wrap{padding-left:1rem;padding-right:1rem}
+}
+@media(max-width:520px){
+  .pipeline-board{grid-template-columns:1fr}
+  .summary{grid-template-columns:1fr 1fr}
+  .search-wrap{display:none}
+  .topbar-title{display:none}
+}
+```
+
+  </style>
+</head>
+<body id="body">
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Portfolio
+    </a>
+    <div class="topbar-title">Ops <em>Dashboard</em></div>
+  </div>
+  <div class="topbar-right">
+    <span class="demo-badge">Live Demo</span>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀ Light Mode</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" id="tab-ops" onclick="switchTab('ops')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+    Operations Tracker
+  </div>
+  <div class="tab" id="tab-crm" onclick="switchTab('crm')">
+    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    CRM Pipeline
+  </div>
+</div>
+
+<!-- OPS TAB -->
+
+<div id="ops-tab">
+  <div class="summary" id="ops-summary"></div>
+  <div class="filters">
+    <span class="filter-label">Status</span>
+    <button class="filter-btn active" onclick="filterOps('status','all',this)">All</button>
+    <button class="filter-btn" onclick="filterOps('status','In Progress',this)">In Progress</button>
+    <button class="filter-btn" onclick="filterOps('status','Blocked',this)">Blocked</button>
+    <button class="filter-btn" onclick="filterOps('status','In Review',this)">In Review</button>
+    <button class="filter-btn" onclick="filterOps('status','Done',this)">Done</button>
+    <button class="filter-btn" onclick="filterOps('status','Not Started',this)">Not Started</button>
+    <div class="filter-sep"></div>
+    <span class="filter-label">Priority</span>
+    <button class="filter-btn" onclick="filterOps('priority','High',this)">High</button>
+    <button class="filter-btn" onclick="filterOps('priority','Medium',this)">Medium</button>
+    <button class="filter-btn" onclick="filterOps('priority','Low',this)">Low</button>
+    <div class="search-wrap">
+      <span class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input class="search-input" type="text" placeholder="Search tasks..." oninput="searchOps(this.value)"/>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortOps('name')">Task <span class="sort-icon">↕</span></th>
+          <th onclick="sortOps('project')">Project <span class="sort-icon">↕</span></th>
+          <th onclick="sortOps('department')">Department <span class="sort-icon">↕</span></th>
+          <th onclick="sortOps('owner')">Owner <span class="sort-icon">↕</span></th>
+          <th onclick="sortOps('status')">Status <span class="sort-icon">↕</span></th>
+          <th onclick="sortOps('priority')">Priority <span class="sort-icon">↕</span></th>
+          <th onclick="sortOps('due')">Due Date <span class="sort-icon">↕</span></th>
+          <th>Blockers / Notes</th>
+        </tr>
+      </thead>
+      <tbody id="ops-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- CRM TAB -->
+
+<div id="crm-tab" style="display:none">
+  <div class="pipeline-wrap">
+    <div class="pipeline-summary" id="crm-summary"></div>
+    <div class="pipeline-header">
+      <div class="pipeline-title">Revenue <em>Pipeline</em></div>
+      <div class="pipeline-filters">
+        <button class="filter-btn active" onclick="filterCRM('all',this)">All Deals</button>
+        <button class="filter-btn" onclick="filterCRM('high',this)">High Value ($40k+)</button>
+        <button class="filter-btn" onclick="filterCRM('soon',this)">Closing Soon</button>
+      </div>
+    </div>
+    <div class="pipeline-board" id="crm-board"></div>
+  </div>
+</div>
+
+<div class="dash-footer">
+  <span class="dash-footer-left">Demo Dashboard — Chileleko Lombe Moonga · Operational &amp; Revenue Systems</span>
+  <div class="dash-footer-right">
+    <a href="index.html">← Portfolio</a>
+    <a href="contact.html">Get in Touch</a>
+  </div>
+</div>
+
+<script>
+const opsData=[
+  {name:"Launch Q2 Investment Product Campaign",project:"Q2 Growth Campaign",department:"Marketing",owner:"Daniel Okafor",status:"In Progress",priority:"High",due:"2026-07-20",blockers:"Waiting on final compliance approval for ad creatives.",notes:"Campaign includes email, paid ads, and landing page rollout."},
+  {name:"Reconcile March Transaction Discrepancies",project:"Transaction Integrity Audit",department:"Finance",owner:"Sarah Johnson",status:"In Progress",priority:"High",due:"2026-07-15",blockers:"Missing transaction logs from payment gateway.",notes:"Affects ~2.3% of March transactions."},
+  {name:"Implement KYC Verification Update",project:"Financial Compliance Upgrade",department:"Compliance",owner:"Michael Chen",status:"Blocked",priority:"High",due:"2026-07-18",blockers:"Awaiting regulatory clarification on new ID requirements.",notes:"Critical for regulatory compliance."},
+  {name:"Redesign Mobile App Dashboard UI",project:"Product Experience Revamp",department:"Engineering",owner:"Phillips Adam",status:"In Progress",priority:"Medium",due:"2026-07-25",blockers:"None",notes:"Focus on improving user retention and usability."},
+  {name:"Prepare Investor Performance Report Q1",project:"Investor Reporting Q1",department:"Finance",owner:"Margaret Johnson",status:"Done",priority:"High",due:"2026-07-10",blockers:"None",notes:"Report shared with all stakeholders."},
+  {name:"Audit Customer Withdrawal Delays",project:"Transaction Integrity Audit",department:"Operations",owner:"Blessing Simon",status:"In Review",priority:"Medium",due:"2026-07-16",blockers:"Waiting on backend logs from engineering.",notes:"High customer complaint volume."},
+  {name:"Optimize Paid Ads for Loan Products",project:"Loan Acquisition Optimization",department:"Marketing",owner:"Matthew Williams",status:"Not Started",priority:"Low",due:"2026-07-30",blockers:"Budget not yet approved.",notes:"Target audience: SME segment."},
+  {name:"Onboard Enterprise Client — Nexova Ltd",project:"Client Expansion Q3",department:"Sales",owner:"Amara Diallo",status:"In Progress",priority:"High",due:"2026-07-22",blockers:"None",notes:"Contract signed. Kickoff scheduled."},
+  {name:"Update SOP for Vendor Payment Process",project:"Operations Standardization",department:"Operations",owner:"Chileleko Lombe",status:"Done",priority:"Medium",due:"2026-07-08",blockers:"None",notes:"SOP approved and distributed to team."},
+  {name:"Review Q2 CRM Pipeline Health",project:"Revenue Ops Q2 Review",department:"Revenue Ops",owner:"Chileleko Lombe",status:"In Review",priority:"High",due:"2026-07-19",blockers:"None",notes:"Identifying stalled deals and re-engagement opportunities."},
+  {name:"Migrate Legacy Data to HubSpot",project:"CRM Consolidation",department:"Revenue Ops",owner:"Fatima Hassan",status:"In Progress",priority:"Medium",due:"2026-07-28",blockers:"Data formatting inconsistencies from legacy system.",notes:"Phase 2 of CRM consolidation project."},
+  {name:"Conduct Team Performance Reviews Q2",project:"HR Ops Q2",department:"Operations",owner:"Chileleko Lombe",status:"Not Started",priority:"Medium",due:"2026-08-01",blockers:"None",notes:"360-degree review format this cycle."},
+  {name:"Launch Referral Incentive Program",project:"Customer Growth Initiative",department:"Marketing",owner:"Daniel Okafor",status:"Not Started",priority:"Low",due:"2026-08-05",blockers:"Incentive structure pending finance sign-off.",notes:"Targeting existing customer base."},
+  {name:"Automate Monthly Reporting Workflow",project:"Operations Standardization",department:"Revenue Ops",owner:"Chileleko Lombe",status:"In Progress",priority:"High",due:"2026-07-24",blockers:"None",notes:"Using HubSpot + Google Data Studio integration."},
+  {name:"Security Audit — Customer Data Storage",project:"Compliance Review Q3",department:"Compliance",owner:"Michael Chen",status:"Not Started",priority:"High",due:"2026-07-31",blockers:"Awaiting external auditor availability.",notes:"Mandatory annual review."},
+];
+
+const stages=["Lead Identified","Qualified","Proposal Sent","Negotiation","Closed Won"];
+const crmDeals=[
+  {company:"Nexova Ltd",name:"Enterprise Operations Suite",value:48000,stage:"Closed Won",owner:"Amara Diallo",prob:100,close:"2026-07-22"},
+  {company:"Meridian Bank",name:"CRM Implementation Package",value:85000,stage:"Negotiation",owner:"Chileleko Lombe",prob:75,close:"2026-07-31"},
+  {company:"Apex Logistics",name:"Revenue Ops Audit & Setup",value:32000,stage:"Proposal Sent",owner:"Sarah Johnson",prob:55,close:"2026-08-10"},
+  {company:"Sunrise Capital",name:"Q3 Reporting Automation",value:27500,stage:"Qualified",owner:"Chileleko Lombe",prob:40,close:"2026-08-20"},
+  {company:"TechBridge Africa",name:"HubSpot Onboarding",value:19000,stage:"Lead Identified",owner:"Daniel Okafor",prob:20,close:"2026-09-01"},
+  {company:"Kalahari Ventures",name:"Operations Dashboard Build",value:41000,stage:"Proposal Sent",owner:"Margaret Johnson",prob:60,close:"2026-08-05"},
+  {company:"Zuri Fintech",name:"Process Improvement Retainer",value:72000,stage:"Negotiation",owner:"Chileleko Lombe",prob:80,close:"2026-07-28"},
+  {company:"Lumina Health",name:"Cross-functional PM Support",value:38500,stage:"Qualified",owner:"Phillips Adam",prob:35,close:"2026-08-25"},
+  {company:"Nova Retail Group",name:"Vendor Management SOP",value:15000,stage:"Lead Identified",owner:"Blessing Simon",prob:15,close:"2026-09-10"},
+  {company:"Atlas Group",name:"CRM Pipeline Restructure",value:55000,stage:"Closed Won",owner:"Amara Diallo",prob:100,close:"2026-07-05"},
+  {company:"Pinnacle Investments",name:"KPI Dashboard Setup",value:29000,stage:"Proposal Sent",owner:"Fatima Hassan",prob:50,close:"2026-08-15"},
+  {company:"Sahara Logistics",name:"Automation Workflow Build",value:22000,stage:"Lead Identified",owner:"Daniel Okafor",prob:25,close:"2026-09-20"},
+];
+
+let opsFilter={status:'all',priority:'all',search:''};
+let opsSortKey=null,opsSortDir=1,crmFilter='all',isLight=false;
+
+const avatarColors=['#5a8ae0','#e07d2a','#4db885','#a05ae0','#e05a5a','#d4a853','#5ae0c8'];
+const avatarColor=name=>{let h=0;for(let c of name)h=(h<<5)-h+c.charCodeAt(0);return avatarColors[Math.abs(h)%avatarColors.length]};
+const initials=name=>name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+const fmtDate=d=>new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+const fmtCurrency=v=>'$'+v.toLocaleString();
+const isOverdue=(due,status)=>new Date(due)<new Date()&&status!=='Done';
+
+const statusTag=s=>({
+  'In Progress':'<span class="tag tag-progress"><span class="status-dot dot-progress"></span>In Progress</span>',
+  'Blocked':'<span class="tag tag-blocked"><span class="status-dot dot-blocked"></span>Blocked</span>',
+  'In Review':'<span class="tag tag-review"><span class="status-dot dot-review"></span>In Review</span>',
+  'Done':'<span class="tag tag-done"><span class="status-dot dot-done"></span>Done</span>',
+  'Not Started':'<span class="tag tag-notstarted"><span class="status-dot dot-ns"></span>Not Started</span>',
+}[s]||s);
+
+const priorityTag=p=>({
+  'High':'<span class="tag tag-high">High</span>',
+  'Medium':'<span class="tag tag-medium">Medium</span>',
+  'Low':'<span class="tag tag-low">Low</span>',
+}[p]||p);
+
+function renderOpsSummary(){
+  const c={total:opsData.length,progress:0,blocked:0,done:0,review:0,ns:0};
+  opsData.forEach(r=>{
+    if(r.status==='In Progress')c.progress++;
+    else if(r.status==='Blocked')c.blocked++;
+    else if(r.status==='Done')c.done++;
+    else if(r.status==='In Review')c.review++;
+    else c.ns++;
+  });
+  document.getElementById('ops-summary').innerHTML=`
+    <div class="summary-card"><div class="summary-num" style="color:var(--text-bright)">${c.total}</div><div class="summary-label">Total Tasks</div></div>
+    <div class="summary-card"><div class="summary-num" style="color:#5a8ae0">${c.progress}</div><div class="summary-label">In Progress</div></div>
+    <div class="summary-card"><div class="summary-num" style="color:#e05a5a">${c.blocked}</div><div class="summary-label">Blocked</div></div>
+    <div class="summary-card"><div class="summary-num" style="color:#a05ae0">${c.review}</div><div class="summary-label">In Review</div></div>
+    <div class="summary-card"><div class="summary-num" style="color:#4db885">${c.done}</div><div class="summary-label">Done</div></div>
+    <div class="summary-card"><div class="summary-num" style="color:var(--muted)">${c.ns}</div><div class="summary-label">Not Started</div></div>
+  `;
+}
+
+function getFilteredOps(){
+  return opsData.filter(r=>{
+    if(opsFilter.status!=='all'&&r.status!==opsFilter.status)return false;
+    if(opsFilter.priority!=='all'&&r.priority!==opsFilter.priority)return false;
+    if(opsFilter.search){const q=opsFilter.search.toLowerCase();if(![r.name,r.project,r.owner,r.department].some(v=>v.toLowerCase().includes(q)))return false;}
+    return true;
+  });
+}
+
+function renderOpsTable(){
+  let data=getFilteredOps();
+  if(opsSortKey){
+    data=[...data].sort((a,b)=>{
+      let av=a[opsSortKey],bv=b[opsSortKey];
+      if(opsSortKey==='due'){av=new Date(av);bv=new Date(bv);}
+      else{av=av.toLowerCase();bv=bv.toLowerCase();}
+      return av<bv?-opsSortDir:av>bv?opsSortDir:0;
+    });
+  }
+  const tbody=document.getElementById('ops-tbody');
+  if(!data.length){
+    tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg><div class="empty-label">No tasks match your filters</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML=data.map(r=>`<tr>
+    <td><div class="td-name">${r.name}</div></td>
+    <td><div class="td-project">${r.project}</div></td>
+    <td><span class="tag tag-dept">${r.department}</span></td>
+    <td><div class="owner-chip"><div class="owner-avatar" style="background:${avatarColor(r.owner)}">${initials(r.owner)}</div>${r.owner}</div></td>
+    <td>${statusTag(r.status)}</td>
+    <td>${priorityTag(r.priority)}</td>
+    <td><div class="td-date${isOverdue(r.due,r.status)?' overdue':''}">${fmtDate(r.due)}${isOverdue(r.due,r.status)?' ⚠':''}</div></td>
+    <td><div class="td-notes">${r.blockers!=='None'?`<strong>Blocker:</strong> ${r.blockers}<br>`:''}<span>${r.notes}</span></div></td>
+  </tr>`).join('');
+}
+
+function filterOps(type,val,btn){
+  opsFilter[type]=val;
+  const statusVals=['All','In Progress','Blocked','In Review','Done','Not Started'];
+  const priorityVals=['High','Medium','Low'];
+  document.querySelectorAll('.filters .filter-btn').forEach(b=>{
+    const t=b.textContent.trim();
+    if(type==='status'&&statusVals.includes(t))b.classList.remove('active');
+    if(type==='priority'&&priorityVals.includes(t))b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  renderOpsTable();
+}
+
+function searchOps(val){opsFilter.search=val;renderOpsTable();}
+
+function sortOps(key){
+  if(opsSortKey===key)opsSortDir*=-1;
+  else{opsSortKey=key;opsSortDir=1;}
+  document.querySelectorAll('th').forEach(th=>th.classList.remove('sorted'));
+  event.currentTarget.classList.add('sorted');
+  renderOpsTable();
+}
+
+function renderCRMSummary(){
+  const total=crmDeals.reduce((s,d)=>s+d.value,0);
+  const won=crmDeals.filter(d=>d.stage==='Closed Won').reduce((s,d)=>s+d.value,0);
+  const active=crmDeals.filter(d=>d.stage!=='Closed Won').length;
+  const weighted=Math.round(crmDeals.reduce((s,d)=>s+d.value*(d.prob/100),0));
+  document.getElementById('crm-summary').innerHTML=`
+    <div class="ps-card"><div class="ps-label">Total Pipeline</div><div class="ps-val">${fmtCurrency(total)}</div></div>
+    <div class="ps-card"><div class="ps-label">Closed Won</div><div class="ps-val" style="color:#4db885">${fmtCurrency(won)}</div></div>
+    <div class="ps-card"><div class="ps-label">Active Deals</div><div class="ps-val">${active}</div></div>
+    <div class="ps-card"><div class="ps-label">Weighted Value</div><div class="ps-val">${fmtCurrency(weighted)}</div></div>
+  `;
+}
+
+function getFilteredCRM(){
+  let deals=[...crmDeals];
+  if(crmFilter==='high')deals=deals.filter(d=>d.value>=40000);
+  if(crmFilter==='soon')deals=deals.filter(d=>new Date(d.close)<=new Date('2026-07-31'));
+  return deals;
+}
+
+function renderCRMBoard(){
+  const deals=getFilteredCRM();
+  document.getElementById('crm-board').innerHTML=stages.map(stage=>{
+    const sd=deals.filter(d=>d.stage===stage);
+    const total=sd.reduce((s,d)=>s+d.value,0);
+    return`<div class="pipeline-col">
+      <div class="pipeline-col-header">
+        <span class="pipeline-col-name">${stage}</span>
+        <span class="pipeline-col-count">${sd.length} · ${fmtCurrency(total)}</span>
+      </div>
+      ${sd.length?sd.map(d=>`<div class="deal-card">
+        <div class="deal-company">${d.company}</div>
+        <div class="deal-name">${d.name}</div>
+        <div class="deal-value">${fmtCurrency(d.value)}</div>
+        <div class="deal-meta">
+          <span class="deal-owner" style="display:flex;align-items:center;gap:4px">
+            <span style="width:16px;height:16px;border-radius:50%;background:${avatarColor(d.owner)};display:inline-flex;align-items:center;justify-content:center;font-size:0.48rem;color:#fff;font-weight:600;flex-shrink:0">${initials(d.owner)}</span>
+            ${d.owner.split(' ')[0]}
+          </span>
+          <span class="deal-prob">${d.prob}%</span>
+        </div>
+        <div class="deal-progress"><div class="deal-progress-fill" style="width:${d.prob}%"></div></div>
+      </div>`).join(''):`<div class="no-deals">No deals in this stage</div>`}
+    </div>`;
+  }).join('');
+}
+
+function filterCRM(type,btn){
+  crmFilter=type;
+  document.querySelectorAll('.pipeline-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCRMBoard();
+}
+
+function switchTab(tab){
+  document.getElementById('ops-tab').style.display=tab==='ops'?'block':'none';
+  document.getElementById('crm-tab').style.display=tab==='crm'?'block':'none';
+  document.getElementById('tab-ops').classList.toggle('active',tab==='ops');
+  document.getElementById('tab-crm').classList.toggle('active',tab==='crm');
+}
+
+function toggleTheme(){
+  isLight=!isLight;
+  document.body.classList.toggle('light',isLight);
+  document.getElementById('themeBtn').textContent=isLight?'🌙 Dark Mode':'☀ Light Mode';
+}
+
+renderOpsSummary();
+renderOpsTable();
+renderCRMSummary();
+renderCRMBoard();
+</script>
+
+</body>
+</html>
